@@ -19,6 +19,7 @@ import javax.swing.JTable;
 import models.Personal;
 import models.Usuario;
 import views.Guardado;
+import views.Error;
 
 /**
  *
@@ -143,7 +144,7 @@ public class vP_CapturaHuellas extends javax.swing.JPanel {
         btnCapturaHuellas.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
         btnCapturaHuellas.setForeground(new java.awt.Color(51, 51, 51));
         btnCapturaHuellas.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/icon/iCamera-Dark.png"))); // NOI18N
-        btnCapturaHuellas.setText("Registro completo");
+        btnCapturaHuellas.setText("Guardar registro completo");
         btnCapturaHuellas.setBorder(null);
         btnCapturaHuellas.setContentAreaFilled(false);
         btnCapturaHuellas.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
@@ -153,6 +154,11 @@ public class vP_CapturaHuellas extends javax.swing.JPanel {
         btnCapturaHuellas.setMinimumSize(new java.awt.Dimension(190, 28));
         btnCapturaHuellas.setOpaque(true);
         btnCapturaHuellas.setPreferredSize(new java.awt.Dimension(190, 28));
+        btnCapturaHuellas.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCapturaHuellasActionPerformed(evt);
+            }
+        });
 
         btnCapturaHuellas1.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
         btnCapturaHuellas1.setForeground(new java.awt.Color(51, 51, 51));
@@ -510,9 +516,8 @@ public class vP_CapturaHuellas extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 //boton para capturar la imagen de la camara
     private void btnCapturaHuellas3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnCapturaHuellas3MouseClicked
-
         capturarYMostrarImagen();
-        camara.enviarimagenAPersonalDao(personalDAO);
+        //camara.enviarimagenAPersonalDao(personalDAO);
         guardado();
 
     }//GEN-LAST:event_btnCapturaHuellas3MouseClicked
@@ -586,7 +591,7 @@ public class vP_CapturaHuellas extends javax.swing.JPanel {
     }//GEN-LAST:event_nombreComboBoxActionPerformed
 
     private void seekerKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_seekerKeyReleased
-       String textoBusqueda = seeker.getText();
+        String textoBusqueda = seeker.getText();
         if (seeker.getText() != null) {
             List<String> resultados = personalDAO.buscarApellidos(textoBusqueda, table);
             nombreComboBox.removeAllItems();
@@ -598,6 +603,17 @@ public class vP_CapturaHuellas extends javax.swing.JPanel {
             nombreComboBox.removeAllItems();
         }
     }//GEN-LAST:event_seekerKeyReleased
+
+    private void btnCapturaHuellasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCapturaHuellasActionPerformed
+        byte[] foto = null;
+        try {
+            foto = camara.convertBufferedImageToBytes(personal.getFoto(), "png");
+            personalDAO.guardarBiometricos(foto);
+            guardado();
+        } catch (Exception ex) {
+            error();
+        }
+    }//GEN-LAST:event_btnCapturaHuellasActionPerformed
 
     private void mostrarImagen() {
         try {
@@ -670,6 +686,13 @@ public class vP_CapturaHuellas extends javax.swing.JPanel {
 
     //metodo para confirmar visualmente que se guardo en base de datos
     public void guardado() {
+        Guardado ok = new Guardado();
+        ok.setVisible(true);
+    }
+    
+    public void error(){
+        Error err = new Error();
+        err.setVisible(true);
     }
 
 

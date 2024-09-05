@@ -277,7 +277,7 @@
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
               <Image iconType="3" name="/resources/icon/iCamera-Dark.png"/>
             </Property>
-            <Property name="text" type="java.lang.String" value="Registro completo"/>
+            <Property name="text" type="java.lang.String" value="Guardar registro completo"/>
             <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
               <Border info="null"/>
             </Property>
@@ -298,6 +298,9 @@
               <Dimension value="[190, 28]"/>
             </Property>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnCapturaHuellasActionPerformed"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JButton" name="btnCapturaHuellas1">
           <Properties>

@@ -77,7 +77,6 @@ public class PersonalDAO {
 
     public List<String> buscarApellidos(String apellidoBuscado, JTable table) {
         List<String> nombresCompletos = new ArrayList<>();
-        UserDAO userDAO = new UserDAO();
         String apellidoBuscadoLower = apellidoBuscado.toLowerCase();
 
 //obetener el modelo de la tabla
@@ -96,7 +95,6 @@ public class PersonalDAO {
             }
 
         }
-        System.out.println("Apellido buuscado: " + apellidoBuscado);
         return nombresCompletos;
     }
 
