@@ -518,7 +518,7 @@ public class vP_CapturaHuellas extends javax.swing.JPanel {
     private void btnCapturaHuellas3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnCapturaHuellas3MouseClicked
         capturarYMostrarImagen();
         //camara.enviarimagenAPersonalDao(personalDAO);
-        guardado();
+       // guardado();
 
     }//GEN-LAST:event_btnCapturaHuellas3MouseClicked
 
@@ -611,6 +611,7 @@ public class vP_CapturaHuellas extends javax.swing.JPanel {
             personalDAO.guardarBiometricos(foto);
             guardado();
         } catch (Exception ex) {
+            ex.printStackTrace();
             error();
         }
     }//GEN-LAST:event_btnCapturaHuellasActionPerformed
