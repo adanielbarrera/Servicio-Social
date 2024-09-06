@@ -18,7 +18,13 @@ public class Personal {
     private String rFC;
     private String cURP;
     private String puesto;
+    private int id;
     private BufferedImage foto;
+    private byte[] huella1;
+    private byte[] huella2;
+    private byte[] huella3;
+    private byte[] huella4;
+    private byte[] huella5;
 
     public static Personal getInstance(){
         if(instance == null){
@@ -32,13 +38,14 @@ public class Personal {
     
     
 
-    public Personal(String nombre, String apePaterno, String apeMaterno, String rFC, String cURP, String puesto, BufferedImage foto) {
+    public Personal(String nombre, String apePaterno, String apeMaterno, String rFC, String cURP, String puesto, BufferedImage foto, int id) {
         this.nombre = nombre;
         this.apePaterno = apePaterno;
         this.apeMaterno = apeMaterno;
         this.rFC = rFC;
         this.cURP = cURP;
         this.puesto = puesto;
+        this.id = id;
         this.foto = foto;
     }
 
@@ -96,6 +103,54 @@ public class Personal {
 
     public void setFoto(BufferedImage foto) {
         this.foto = foto;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public byte[] getHuella1() {
+        return huella1;
+    }
+
+    public void setHuella1(byte[] huella1) {
+        this.huella1 = huella1;
+    }
+
+    public byte[] getHuella2() {
+        return huella2;
+    }
+
+    public void setHuella2(byte[] huella2) {
+        this.huella2 = huella2;
+    }
+
+    public byte[] getHuella3() {
+        return huella3;
+    }
+
+    public void setHuella3(byte[] huella3) {
+        this.huella3 = huella3;
+    }
+
+    public byte[] getHuella4() {
+        return huella4;
+    }
+
+    public void setHuella4(byte[] huella4) {
+        this.huella4 = huella4;
+    }
+
+    public byte[] getHuella5() {
+        return huella5;
+    }
+
+    public void setHuella5(byte[] huella5) {
+        this.huella5 = huella5;
     }
     
     

@@ -37,9 +37,15 @@ public class LectorHuella {
     private DPFPVerification verificador;
     private vP_CapturaHuellas vCaptura;
     private DPFPTemplate template;
-    private PersonalDAO personalDAO;
+    private PersonalDAO personalDAO = new PersonalDAO();
     private String dedoSeleccionado;
     private int progreso;
+    public boolean esProcesoDeVerificacion = false;
+
+    public LectorHuella(vP_CapturaHuellas vP_CapturaHuellas) {
+        this.vCaptura = vP_CapturaHuellas;
+        inicializarComponentes();
+    }
 
     public void inicializarComponentes() {
         try {
@@ -90,6 +96,7 @@ public class LectorHuella {
             @Override
             public void dataAcquired(DPFPDataEvent dpfpde) {
                 System.out.println("Adquiri datos");
+                procesarMuestra(dpfpde.getSample());
             }
         }
         );
@@ -99,7 +106,7 @@ public class LectorHuella {
         Image imagenHuella = crearImagenHuella(sample);
         vCaptura.actualizarJLabelConHuella(imagenHuella);
 
-        if (esProcesoDeVerificacion()) {
+        if (esProcesoDeVerificacion) {
             verificarHuella(sample);
         } else {
             procesarEnrollment(sample);
@@ -109,10 +116,6 @@ public class LectorHuella {
 
     private Image crearImagenHuella(DPFPSample sample) {
         return DPFPGlobal.getSampleConversionFactory().createImage(sample);
-    }
-
-    private boolean esProcesoDeVerificacion() {
-        return template != null;
     }
 
     public void iniciarEnrollmentPorDedo(String dedo) {
@@ -129,10 +132,16 @@ public class LectorHuella {
             reclutador.addFeatures(features);
             actualizarProgresoEnrollment();
 
-            if (enrollmentCompletado()) {
+            if (progreso >= 4) {
+                System.out.println("Alcanzaste 4");
                 template = reclutador.getTemplate();
-                guardarTemplateEnBaseDeDatos();
+                System.out.println("template actualizada");
+                System.out.println("guardar huella del dedo " + dedoSeleccionado);
+                personalDAO.agregarHuella(dedoSeleccionado, template);
+                System.out.println("Enrollment completado y huella guardada en el map");
                 resetEnrollment();
+            } else {
+                System.out.println("siga capturando");
             }
         } catch (DPFPImageQualityException e) {
             manejarError("Error de calidad de imagen durante el enrollment: ", e);
@@ -149,18 +158,13 @@ public class LectorHuella {
         System.out.println("Huella escaneada. Progreso: " + progreso + "/4");
     }
 
-    private boolean enrollmentCompletado() {
-        return progreso >= 4;
-    }
-
     private void resetEnrollment() {
         progreso = 0;
         reclutador.clear();
     }
 
     private void guardarTemplateEnBaseDeDatos() {
-        personalDAO.agregarHuella(dedoSeleccionado, template);
-        System.out.println("Enrollment completado y huella guardada en el map");
+
     }
 
     private void verificarHuella(DPFPSample sample) {
@@ -169,13 +173,13 @@ public class LectorHuella {
             List<DPFPTemplate> plantillasAlmacenadas = personalDAO.obtenerTodasLasPlatillas();
             for (DPFPTemplate plantilla : plantillasAlmacenadas) {
                 DPFPVerificationResult resultado = verificador.verify(features, plantilla);
-                if(resultado.isVerified()){
+                if (resultado.isVerified()) {
                     System.out.println("Huella verificada exitosamente");
                     return;
                 }
             }
             System.out.println("Huella no coincide con ninguna plantilla almacenada");
-        }catch(Exception e){
+        } catch (Exception e) {
             manejarError("Error durante la verficacion de huella", e);
         }
     }
@@ -184,4 +188,9 @@ public class LectorHuella {
         System.err.println(mensaje + e.getMessage());
         e.printStackTrace();
     }
+
+    public void setDedoSeleccionado(String dedoSeleccionado) {
+        this.dedoSeleccionado = dedoSeleccionado;
+    }
+
 }

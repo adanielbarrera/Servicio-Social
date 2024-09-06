@@ -14,6 +14,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import libraries.lStyle;
 import controllers.Camara;
+import controllers.LectorHuella;
 import controllers.LectorHuellas;
 import javax.swing.JTable;
 import models.Personal;
@@ -29,7 +30,7 @@ public class vP_CapturaHuellas extends javax.swing.JPanel {
 
     lStyle lStyle = new lStyle();
     private Camara camara;
-    private LectorHuellas lector;
+    private LectorHuella lector;
     private PersonalDAO personalDAO;
     private UserDAO userDAO;
     private Usuario user = Usuario.getInstance();
@@ -45,7 +46,7 @@ public class vP_CapturaHuellas extends javax.swing.JPanel {
         initComponents();
         setDataMain();
         this.camara = new Camara();
-        this.lector = new LectorHuellas(this);
+        this.lector = new LectorHuella(this);
         this.personalDAO = new PersonalDAO();
         this.userDAO = new UserDAO();
         try {
@@ -88,6 +89,13 @@ public class vP_CapturaHuellas extends javax.swing.JPanel {
         fingerprintImage = new javax.swing.JLabel();
         jProgressBar1 = new javax.swing.JProgressBar();
         nombreComboBox = new javax.swing.JComboBox<>();
+        panelStatus = panelStatus = new PanelRegistroCompleto();
+        jPanel1 = jPanel1 = new FotoPanel();
+        jPanel4 = jPanel4 = new FotoPanel();
+        jPanel2 = jPanel2 = new FotoPanel();
+        jPanel5 = jPanel5 = new FotoPanel();
+        jPanel3 = jPanel3 = new FotoPanel();
+        statusPersonal = new javax.swing.JLabel();
 
         setBackground(new java.awt.Color(246, 249, 252));
         setMaximumSize(new java.awt.Dimension(1000, 600));
@@ -451,7 +459,7 @@ public class vP_CapturaHuellas extends javax.swing.JPanel {
                         .addComponent(jProgressBar1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(7, 7, 7)
                         .addComponent(fingerprintImage, javax.swing.GroupLayout.PREFERRED_SIZE, 163, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(10, Short.MAX_VALUE))
+                .addContainerGap(88, Short.MAX_VALUE))
         );
 
         nombreComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Selecciona una opción..." }));
@@ -461,6 +469,78 @@ public class vP_CapturaHuellas extends javax.swing.JPanel {
                 nombreComboBoxActionPerformed(evt);
             }
         });
+
+        panelStatus.setBackground(new java.awt.Color(255, 255, 255));
+        panelStatus.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 100, Short.MAX_VALUE)
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 100, Short.MAX_VALUE)
+        );
+
+        panelStatus.add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 10, -1, -1));
+
+        javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
+        jPanel4.setLayout(jPanel4Layout);
+        jPanel4Layout.setHorizontalGroup(
+            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 100, Short.MAX_VALUE)
+        );
+        jPanel4Layout.setVerticalGroup(
+            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 100, Short.MAX_VALUE)
+        );
+
+        panelStatus.add(jPanel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 120, -1, -1));
+
+        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
+        jPanel2.setLayout(jPanel2Layout);
+        jPanel2Layout.setHorizontalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 100, Short.MAX_VALUE)
+        );
+        jPanel2Layout.setVerticalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 100, Short.MAX_VALUE)
+        );
+
+        panelStatus.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 10, -1, -1));
+
+        javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
+        jPanel5.setLayout(jPanel5Layout);
+        jPanel5Layout.setHorizontalGroup(
+            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 100, Short.MAX_VALUE)
+        );
+        jPanel5Layout.setVerticalGroup(
+            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 100, Short.MAX_VALUE)
+        );
+
+        panelStatus.add(jPanel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 120, -1, -1));
+
+        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
+        jPanel3.setLayout(jPanel3Layout);
+        jPanel3Layout.setHorizontalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 100, Short.MAX_VALUE)
+        );
+        jPanel3Layout.setVerticalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 100, Short.MAX_VALUE)
+        );
+
+        panelStatus.add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 10, -1, -1));
+
+        statusPersonal.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
+        statusPersonal.setForeground(new java.awt.Color(51, 51, 51));
+        statusPersonal.setText("Para empezar seleccione personal...");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -472,22 +552,27 @@ public class vP_CapturaHuellas extends javax.swing.JPanel {
                         .addContainerGap()
                         .addComponent(title, javax.swing.GroupLayout.DEFAULT_SIZE, 988, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(22, 22, 22)
-                        .addComponent(panelGeneralData, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addGroup(layout.createSequentialGroup()
+                                    .addGap(22, 22, 22)
+                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                        .addComponent(panelGeneralData, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(panelStatus, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                    .addComponent(panelGeneralData1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGroup(layout.createSequentialGroup()
+                                    .addGap(757, 757, 757)
+                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                            .addComponent(iconSeeker)
+                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                            .addComponent(seeker, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                        .addComponent(separatorSeeker, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                             .addGroup(layout.createSequentialGroup()
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(panelGeneralData1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(297, 297, 297)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                        .addComponent(iconSeeker)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(seeker, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addComponent(separatorSeeker, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGap(116, 116, 116)
+                                .addComponent(statusPersonal)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(nombreComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, 350, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
@@ -504,12 +589,15 @@ public class vP_CapturaHuellas extends javax.swing.JPanel {
                 .addGap(3, 3, 3)
                 .addComponent(separatorSeeker, javax.swing.GroupLayout.PREFERRED_SIZE, 5, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(nombreComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(85, 85, 85)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(nombreComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(statusPersonal))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(panelGeneralData, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(panelStatus, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addComponent(panelGeneralData1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
@@ -524,27 +612,27 @@ public class vP_CapturaHuellas extends javax.swing.JPanel {
 
     private void btnPulgarDerMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnPulgarDerMouseClicked
         btnPulgarDer.setBackground(lStyle.getBtnseleccionado());
-        lector.seleccionarDedo("pulgar derecho");
+        lector.iniciarEnrollmentPorDedo("pulgar derecho");
     }//GEN-LAST:event_btnPulgarDerMouseClicked
 
     private void btnIndiceDerMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnIndiceDerMouseClicked
         btnIndiceDer.setBackground(lStyle.getBtnseleccionado());
-        lector.seleccionarDedo("indice derecho");
+        lector.iniciarEnrollmentPorDedo("indice derecho");
     }//GEN-LAST:event_btnIndiceDerMouseClicked
 
     private void btnMedioMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnMedioMouseClicked
         btnMedio.setBackground(lStyle.getBtnseleccionado());
-        lector.seleccionarDedo("medio");
+        lector.iniciarEnrollmentPorDedo("medio");
     }//GEN-LAST:event_btnMedioMouseClicked
 
     private void btnPulgarIzqMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnPulgarIzqMouseClicked
         btnPulgarIzq.setBackground(lStyle.getBtnseleccionado());
-        lector.seleccionarDedo("pulgar izquierdo");
+        lector.iniciarEnrollmentPorDedo("pulgar izquierdo");
     }//GEN-LAST:event_btnPulgarIzqMouseClicked
 
     private void btnIndiceIzqMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnIndiceIzqMouseClicked
         btnIndiceIzq.setBackground(lStyle.getBtnseleccionado());
-        lector.seleccionarDedo("indice izquierdo");
+        lector.iniciarEnrollmentPorDedo("indice izquierdo");
     }//GEN-LAST:event_btnIndiceIzqMouseClicked
 
     private void btnCapturaHuellas3MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnCapturaHuellas3MouseEntered
@@ -564,6 +652,33 @@ public class vP_CapturaHuellas extends javax.swing.JPanel {
                 userName.setText(personal.getNombre() + " " + personal.getApePaterno() + " " + personal.getApeMaterno());
                 userJob.setText(personal.getrFC() + " | " + personal.getcURP());
                 userDepartament.setText(personal.getPuesto());
+                
+                //validacion
+                personalDAO.registrarPersonal(personal);
+                if(personalDAO.tieneBiometria(personal.getrFC())){
+                    statusPersonal.setText("El personal esta registrado");
+                    statusPersonal.setForeground(lStyle.getTxtSuccess());
+                    //mostrar panel con las huellas registradas
+                    personalDAO.getBiometria(personal);
+                    BufferedImage[] huellas = {
+                    camara.convertirBytesABufferedImage(personal.getHuella1()),
+                    camara.convertirBytesABufferedImage(personal.getHuella2()),
+                    camara.convertirBytesABufferedImage(personal.getHuella3()),
+                    camara.convertirBytesABufferedImage(personal.getHuella4()),
+                    camara.convertirBytesABufferedImage(personal.getHuella5())
+                    };
+                    ((FotoPanel) jPanel1).setImage(huellas[0]);
+                    ((FotoPanel) jPanel1).setImage(huellas[1]);
+                    ((FotoPanel) jPanel1).setImage(huellas[2]);
+                    ((FotoPanel) jPanel1).setImage(huellas[3]);
+                    ((FotoPanel) jPanel1).setImage(huellas[4]);
+                    
+                    
+                    
+                }else{
+                    statusPersonal.setText("El personal no tiene registro completo");
+                    statusPersonal.setForeground(lStyle.getTxtDanger());
+                }
 
                 //mostrar imagen
                 BufferedImage img = personal.getFoto();
@@ -576,7 +691,7 @@ public class vP_CapturaHuellas extends javax.swing.JPanel {
                 btnPulgarIzq.setBackground(new Color(214, 217, 223));
                 btnIndiceIzq.setBackground(new Color(214, 217, 223));
 
-                lector.resetProgreso();
+                //lector.resetProgreso();
             } else {
                 userName.setText("Nombre");
                 userJob.setText("RFC|CURP");
@@ -708,13 +823,20 @@ public class vP_CapturaHuellas extends javax.swing.JPanel {
     private javax.swing.JButton btnPulgarIzq;
     private javax.swing.JLabel fingerprintImage;
     private javax.swing.JLabel iconSeeker;
+    private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
+    private javax.swing.JPanel jPanel3;
+    private javax.swing.JPanel jPanel4;
+    private javax.swing.JPanel jPanel5;
     private javax.swing.JProgressBar jProgressBar1;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JComboBox<String> nombreComboBox;
     private javax.swing.JPanel panelGeneralData;
     private javax.swing.JPanel panelGeneralData1;
+    private javax.swing.JPanel panelStatus;
     private javax.swing.JTextField seeker;
     private javax.swing.JSeparator separatorSeeker;
+    private javax.swing.JLabel statusPersonal;
     private javax.swing.JLabel title;
     private javax.swing.JLabel titlePanelGeneralData;
     private javax.swing.JLabel titlePanelGeneralData1;
