@@ -24,7 +24,10 @@ import com.digitalpersona.onetouch.verification.DPFPVerificationResult;
 import java.awt.Image;
 import java.awt.image.BufferedImage;
 import java.util.List;
+import java.util.Map;
+import models.Personal;
 import views.process.vP_CapturaHuellas;
+import views.process.vP_VerificadorHuellas;
 
 /**
  *
@@ -32,6 +35,7 @@ import views.process.vP_CapturaHuellas;
  */
 public class LectorHuella {
 
+    private static LectorHuella instancia;
     private DPFPCapture reader;
     private DPFPEnrollment reclutador;
     private DPFPVerification verificador;
@@ -40,11 +44,19 @@ public class LectorHuella {
     private PersonalDAO personalDAO = new PersonalDAO();
     private String dedoSeleccionado;
     private int progreso;
+    private vP_VerificadorHuellas verif;
     public boolean esProcesoDeVerificacion = false;
+    public boolean encontrado = false;
 
-    public LectorHuella(vP_CapturaHuellas vP_CapturaHuellas) {
-        this.vCaptura = vP_CapturaHuellas;
+    private LectorHuella() {
         inicializarComponentes();
+    }
+
+    public static LectorHuella getInstance() {
+        if (instancia == null) {
+            instancia = new LectorHuella();
+        }
+        return instancia;
     }
 
     public void inicializarComponentes() {
@@ -104,12 +116,13 @@ public class LectorHuella {
 
     public void procesarMuestra(DPFPSample sample) {
         Image imagenHuella = crearImagenHuella(sample);
-        vCaptura.actualizarJLabelConHuella(imagenHuella);
 
         if (esProcesoDeVerificacion) {
             verificarHuella(sample);
+            verif.actualizarJLabelConHuella(imagenHuella);
         } else {
             procesarEnrollment(sample);
+            vCaptura.actualizarJLabelConHuella(imagenHuella);
         }
 
     }
@@ -163,22 +176,30 @@ public class LectorHuella {
         reclutador.clear();
     }
 
-    private void guardarTemplateEnBaseDeDatos() {
-
-    }
-
     private void verificarHuella(DPFPSample sample) {
+        Personal personal = null;
         try {
             DPFPFeatureSet features = extraerFeatures(sample, DPFPDataPurpose.DATA_PURPOSE_VERIFICATION);
-            List<DPFPTemplate> plantillasAlmacenadas = personalDAO.obtenerTodasLasPlatillas();
-            for (DPFPTemplate plantilla : plantillasAlmacenadas) {
+            Map<Integer, DPFPTemplate> plantillasAlmacenadas = personalDAO.obtenerTodasLasPlatillas();
+            for (Map.Entry<Integer, DPFPTemplate> entry : plantillasAlmacenadas.entrySet()) {
+                encontrado = false;
+                int id = entry.getKey();
+                DPFPTemplate plantilla = entry.getValue();
+
                 DPFPVerificationResult resultado = verificador.verify(features, plantilla);
+
                 if (resultado.isVerified()) {
                     System.out.println("Huella verificada exitosamente");
+                    personal = personalDAO.getPersonalByID(id);
+                    verif.actualizarInfo(personal);
+                    encontrado = true;
                     return;
                 }
             }
+            if(!encontrado){
+            verif.actualizarInfo(null);
             System.out.println("Huella no coincide con ninguna plantilla almacenada");
+            }
         } catch (Exception e) {
             manejarError("Error durante la verficacion de huella", e);
         }
@@ -193,4 +214,11 @@ public class LectorHuella {
         this.dedoSeleccionado = dedoSeleccionado;
     }
 
+    public void setVistaCaptura(vP_CapturaHuellas captura) {
+        this.vCaptura = captura;
+    }
+
+    public void setVistaVerif(vP_VerificadorHuellas verif) {
+        this.verif = verif;
+    }
 }

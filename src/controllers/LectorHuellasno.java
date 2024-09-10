@@ -28,7 +28,7 @@ import views.process.vP_CapturaHuellas;
  *
  * @author SSM01
  */
-public class LectorHuellas {
+public class LectorHuellasno {
 
     private DPFPCapture lector;
     private vP_CapturaHuellas vCaptura;
@@ -36,11 +36,11 @@ public class LectorHuellas {
     private DPFPVerification verificador;
     private int progreso = 0; //controla el numero de escaneos
     private String dedoSeleccionado;
-    private boolean reclutado = false;
+    private static boolean reclutado = false;
     private DPFPTemplate template;
     private PersonalDAO personalDAO;
 
-    public LectorHuellas(vP_CapturaHuellas vCaptura) {
+    public LectorHuellasno(vP_CapturaHuellas vCaptura) {
         this.vCaptura = vCaptura;
         this.progreso = 0;
         this.personalDAO = new PersonalDAO();
@@ -98,7 +98,7 @@ public class LectorHuellas {
             vCaptura.actualizarJLabelConHuella(imagen);
             if (reclutado) {
                 //proceso de verificacion
-                verificarHuella(sample);
+               // verificarHuella(sample);
             } else {
                 //proceso de enrollment
                 procesarEnrollment(sample);
@@ -165,7 +165,7 @@ public class LectorHuellas {
         vCaptura.actualizarBarraDeProgreso(dedoSeleccionado, progreso);
         System.out.println("Dedo seleccionado: " + dedoSeleccionado);
     }
-
+/*
     private void verificarHuella(DPFPSample sample) {
         try {
             //extrae la platilla de la muestra
@@ -180,4 +180,5 @@ public class LectorHuellas {
             e.printStackTrace();
         }
     }
+*/
 }

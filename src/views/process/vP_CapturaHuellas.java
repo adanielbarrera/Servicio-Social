@@ -15,7 +15,7 @@ import javax.swing.JButton;
 import libraries.lStyle;
 import controllers.Camara;
 import controllers.LectorHuella;
-import controllers.LectorHuellas;
+import controllers.LectorHuellasno;
 import javax.swing.JTable;
 import models.Personal;
 import models.Usuario;
@@ -46,7 +46,8 @@ public class vP_CapturaHuellas extends javax.swing.JPanel {
         initComponents();
         setDataMain();
         this.camara = new Camara();
-        this.lector = new LectorHuella(this);
+        this.lector = LectorHuella.getInstance();
+        lector.setVistaCaptura(this);
         this.personalDAO = new PersonalDAO();
         this.userDAO = new UserDAO();
         try {
@@ -55,6 +56,8 @@ public class vP_CapturaHuellas extends javax.swing.JPanel {
         } catch (Exception e) {
 
         }
+
+        lector.esProcesoDeVerificacion = false;
         mostrarImagen();
         //this.fingerprintImage.setIcon(dibujarHuella(lector.crearImagenHuella(sample)));
     }
@@ -95,7 +98,9 @@ public class vP_CapturaHuellas extends javax.swing.JPanel {
         jPanel2 = jPanel2 = new FotoPanel();
         jPanel5 = jPanel5 = new FotoPanel();
         jPanel3 = jPanel3 = new FotoPanel();
+        jLabel1 = new javax.swing.JLabel();
         statusPersonal = new javax.swing.JLabel();
+        refresh = new javax.swing.JButton();
 
         setBackground(new java.awt.Color(246, 249, 252));
         setMaximumSize(new java.awt.Dimension(1000, 600));
@@ -181,6 +186,11 @@ public class vP_CapturaHuellas extends javax.swing.JPanel {
         btnCapturaHuellas1.setMinimumSize(new java.awt.Dimension(190, 28));
         btnCapturaHuellas1.setOpaque(true);
         btnCapturaHuellas1.setPreferredSize(new java.awt.Dimension(190, 28));
+        btnCapturaHuellas1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCapturaHuellas1ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout panelGeneralDataLayout = new javax.swing.GroupLayout(panelGeneralData);
         panelGeneralData.setLayout(panelGeneralDataLayout);
@@ -537,10 +547,22 @@ public class vP_CapturaHuellas extends javax.swing.JPanel {
         );
 
         panelStatus.add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 10, -1, -1));
+        panelStatus.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 130, -1, -1));
 
         statusPersonal.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
         statusPersonal.setForeground(new java.awt.Color(51, 51, 51));
         statusPersonal.setText("Para empezar seleccione personal...");
+
+        refresh.setForeground(new java.awt.Color(51, 51, 51));
+        refresh.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/icon/iRefresh-Dark.png"))); // NOI18N
+        refresh.setBorder(null);
+        refresh.setContentAreaFilled(false);
+        refresh.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        refresh.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                refreshActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -562,7 +584,9 @@ public class vP_CapturaHuellas extends javax.swing.JPanel {
                                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                     .addComponent(panelGeneralData1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addGroup(layout.createSequentialGroup()
-                                    .addGap(757, 757, 757)
+                                    .addGap(682, 682, 682)
+                                    .addComponent(refresh)
+                                    .addGap(18, 18, 18)
                                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                         .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                                             .addComponent(iconSeeker)
@@ -584,10 +608,13 @@ public class vP_CapturaHuellas extends javax.swing.JPanel {
                 .addComponent(title)
                 .addGap(22, 22, 22)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(iconSeeker)
-                    .addComponent(seeker, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(3, 3, 3)
-                .addComponent(separatorSeeker, javax.swing.GroupLayout.PREFERRED_SIZE, 5, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(iconSeeker)
+                            .addComponent(seeker, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(3, 3, 3)
+                        .addComponent(separatorSeeker, javax.swing.GroupLayout.PREFERRED_SIZE, 5, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(refresh))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(nombreComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -597,7 +624,7 @@ public class vP_CapturaHuellas extends javax.swing.JPanel {
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(panelGeneralData, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(panelStatus, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addComponent(panelStatus, javax.swing.GroupLayout.DEFAULT_SIZE, 235, Short.MAX_VALUE))
                     .addComponent(panelGeneralData1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
@@ -606,7 +633,7 @@ public class vP_CapturaHuellas extends javax.swing.JPanel {
     private void btnCapturaHuellas3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnCapturaHuellas3MouseClicked
         capturarYMostrarImagen();
         //camara.enviarimagenAPersonalDao(personalDAO);
-       // guardado();
+        // guardado();
 
     }//GEN-LAST:event_btnCapturaHuellas3MouseClicked
 
@@ -652,45 +679,39 @@ public class vP_CapturaHuellas extends javax.swing.JPanel {
                 userName.setText(personal.getNombre() + " " + personal.getApePaterno() + " " + personal.getApeMaterno());
                 userJob.setText(personal.getrFC() + " | " + personal.getcURP());
                 userDepartament.setText(personal.getPuesto());
-                
+
                 //validacion
                 personalDAO.registrarPersonal(personal);
-                if(personalDAO.tieneBiometria(personal.getrFC())){
+                if (personalDAO.tieneBiometria(personal.getrFC())) {
                     statusPersonal.setText("El personal esta registrado");
+                    btnCapturaHuellas.setEnabled(false);
                     statusPersonal.setForeground(lStyle.getTxtSuccess());
                     //mostrar panel con las huellas registradas
                     personalDAO.getBiometria(personal);
-                    BufferedImage[] huellas = {
-                    camara.convertirBytesABufferedImage(personal.getHuella1()),
-                    camara.convertirBytesABufferedImage(personal.getHuella2()),
-                    camara.convertirBytesABufferedImage(personal.getHuella3()),
-                    camara.convertirBytesABufferedImage(personal.getHuella4()),
-                    camara.convertirBytesABufferedImage(personal.getHuella5())
-                    };
-                    ((FotoPanel) jPanel1).setImage(huellas[0]);
-                    ((FotoPanel) jPanel1).setImage(huellas[1]);
-                    ((FotoPanel) jPanel1).setImage(huellas[2]);
-                    ((FotoPanel) jPanel1).setImage(huellas[3]);
-                    ((FotoPanel) jPanel1).setImage(huellas[4]);
-                    
-                    
-                    
-                }else{
+                    BufferedImage huella1 = camara.convertirBytesABufferedImage(personal.getHuella1());
+                    BufferedImage huella2 = camara.convertirBytesABufferedImage(personal.getHuella2());
+                    BufferedImage huella3 = camara.convertirBytesABufferedImage(personal.getHuella3());
+                    BufferedImage huella4 = camara.convertirBytesABufferedImage(personal.getHuella4());
+                    BufferedImage huella5 = camara.convertirBytesABufferedImage(personal.getHuella5());
+
+                    ((FotoPanel) userPhoto).setImage(personal.getFoto());
+                    ((FotoPanel) jPanel1).setImage(huella1);
+                    ((FotoPanel) jPanel2).setImage(huella2);
+                    ((FotoPanel) jPanel3).setImage(huella3);
+                    ((FotoPanel) jPanel4).setImage(huella4);
+                    ((FotoPanel) jPanel5).setImage(huella5);
+
+                } else {
+                    btnCapturaHuellas1.setEnabled(false);
                     statusPersonal.setText("El personal no tiene registro completo");
                     statusPersonal.setForeground(lStyle.getTxtDanger());
+                    //mostrar imagen
+                    BufferedImage img = personal.getFoto();
+                    ((FotoPanel) userPhoto).setImage(img);
                 }
 
-                //mostrar imagen
-                BufferedImage img = personal.getFoto();
-                ((FotoPanel) userPhoto).setImage(img);
-
                 //limpiar la interfaz
-                btnPulgarDer.setBackground(new Color(214, 217, 223));
-                btnIndiceDer.setBackground(new Color(214, 217, 223));
-                btnMedio.setBackground(new Color(214, 217, 223));
-                btnPulgarIzq.setBackground(new Color(214, 217, 223));
-                btnIndiceIzq.setBackground(new Color(214, 217, 223));
-
+                limpiarUI();
                 //lector.resetProgreso();
             } else {
                 userName.setText("Nombre");
@@ -724,12 +745,22 @@ public class vP_CapturaHuellas extends javax.swing.JPanel {
         try {
             foto = camara.convertBufferedImageToBytes(personal.getFoto(), "png");
             personalDAO.guardarBiometricos(foto);
+            limpiarUI();
             guardado();
         } catch (Exception ex) {
             ex.printStackTrace();
             error();
         }
     }//GEN-LAST:event_btnCapturaHuellasActionPerformed
+
+    private void btnCapturaHuellas1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCapturaHuellas1ActionPerformed
+        personalDAO.reemplazarHuellas(personal);
+        limpiarUI();
+    }//GEN-LAST:event_btnCapturaHuellas1ActionPerformed
+
+    private void refreshActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_refreshActionPerformed
+        table = userDAO.tablaPersonalPorDelegacion(user.getDeleg_clv());
+    }//GEN-LAST:event_refreshActionPerformed
 
     private void mostrarImagen() {
         try {
@@ -747,6 +778,7 @@ public class vP_CapturaHuellas extends javax.swing.JPanel {
         if (imagen != null) {
             ((FotoPanel) userPhoto).setImage(imagen);
             ((FotoPanel) userPhoto2).setImage(imagen);
+            personal.setFoto(imagen);
         }
     }
 
@@ -805,10 +837,19 @@ public class vP_CapturaHuellas extends javax.swing.JPanel {
         Guardado ok = new Guardado();
         ok.setVisible(true);
     }
-    
-    public void error(){
+
+    public void error() {
         Error err = new Error();
         err.setVisible(true);
+    }
+
+    public void limpiarUI() {
+        btnPulgarDer.setBackground(new Color(214, 217, 223));
+        btnIndiceDer.setBackground(new Color(214, 217, 223));
+        btnMedio.setBackground(new Color(214, 217, 223));
+        btnPulgarIzq.setBackground(new Color(214, 217, 223));
+        btnIndiceIzq.setBackground(new Color(214, 217, 223));
+
     }
 
 
@@ -823,6 +864,7 @@ public class vP_CapturaHuellas extends javax.swing.JPanel {
     private javax.swing.JButton btnPulgarIzq;
     private javax.swing.JLabel fingerprintImage;
     private javax.swing.JLabel iconSeeker;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
@@ -834,6 +876,7 @@ public class vP_CapturaHuellas extends javax.swing.JPanel {
     private javax.swing.JPanel panelGeneralData;
     private javax.swing.JPanel panelGeneralData1;
     private javax.swing.JPanel panelStatus;
+    private javax.swing.JButton refresh;
     private javax.swing.JTextField seeker;
     private javax.swing.JSeparator separatorSeeker;
     private javax.swing.JLabel statusPersonal;

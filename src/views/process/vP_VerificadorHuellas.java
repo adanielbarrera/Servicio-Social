@@ -4,6 +4,11 @@
  */
 package views.process;
 
+import controllers.LectorHuella;
+import java.awt.Image;
+import javax.swing.ImageIcon;
+import models.Personal;
+
 /**
  *
  * @author juancarloscastillocarrillo
@@ -13,8 +18,12 @@ public class vP_VerificadorHuellas extends javax.swing.JPanel {
     /**
      * Creates new form vP_CapturaHuellas
      */
+    private LectorHuella lector = LectorHuella.getInstance();
+    private Personal personal = Personal.getInstance();
     public vP_VerificadorHuellas() {
         initComponents();
+        lector.esProcesoDeVerificacion = true;
+        lector.setVistaVerif(this);
     }
 
     /**
@@ -27,36 +36,41 @@ public class vP_VerificadorHuellas extends javax.swing.JPanel {
     private void initComponents() {
 
         title = new javax.swing.JLabel();
+        imagenHuella = new javax.swing.JLabel();
+        nombre = new javax.swing.JLabel();
 
         setMaximumSize(new java.awt.Dimension(900, 500));
         setMinimumSize(new java.awt.Dimension(900, 500));
         setPreferredSize(new java.awt.Dimension(900, 500));
+        setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         title.setFont(new java.awt.Font("Montserrat", 1, 24)); // NOI18N
         title.setForeground(new java.awt.Color(51, 51, 51));
         title.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         title.setText("Verificador de huellas digitales");
-
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
-        this.setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(title, javax.swing.GroupLayout.DEFAULT_SIZE, 888, Short.MAX_VALUE)
-                .addContainerGap())
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(title)
-                .addContainerGap(464, Short.MAX_VALUE))
-        );
+        add(title, new org.netbeans.lib.awtextra.AbsoluteConstraints(6, 6, 888, -1));
+        add(imagenHuella, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 160, 130, 160));
+        add(nombre, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 150, -1, -1));
     }// </editor-fold>//GEN-END:initComponents
 
+    public void actualizarJLabelConHuella(Image image) {
+        imagenHuella.setIcon(new ImageIcon(
+                image.getScaledInstance(imagenHuella.getWidth(), imagenHuella.getHeight(), Image.SCALE_DEFAULT)));
+        repaint();
+    }
+    
+    public void actualizarInfo(Personal personal){
+        if(personal != null){
+        nombre.setText(personal.getNombre()+" "+personal.getApePaterno()+" "+personal.getApeMaterno());
+        }
+        else{
+            nombre.setText("no encontrado");
+        }
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel imagenHuella;
+    private javax.swing.JLabel nombre;
     private javax.swing.JLabel title;
     // End of variables declaration//GEN-END:variables
 }

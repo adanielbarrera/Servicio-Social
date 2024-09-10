@@ -20,7 +20,6 @@ import views.process.vP_VerificadorHuellas;
 public class vMain extends javax.swing.JFrame {
 
     lStyle lStyle = new lStyle();
-    
     public DPFPCapture capturer;
     private Usuario userinfo;
     
@@ -356,6 +355,7 @@ public class vMain extends javax.swing.JFrame {
 
     private void btnVerifyActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVerifyActionPerformed
         activeModule("verify");
+        
     }//GEN-LAST:event_btnVerifyActionPerformed
 
     private void btnLogoutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLogoutActionPerformed
