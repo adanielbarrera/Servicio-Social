@@ -35,7 +35,7 @@ public class UserDAO {
 
         try {
             conn = conexion.Conectar(2);
-            String sql = "Select * FROM usuario_apli WHERE uap_usuario=?  AND uap_contrase = ?;";
+            String sql = "Select * FROM usuario_apli WHERE uap_usuario COLLATE Latin1_General_BIN =?  AND uap_contrase COLLATE Latin1_General_BIN = ?;";
 
             pstmt = conn.prepareStatement(sql);
             pstmt.setString(1, user);
@@ -132,9 +132,13 @@ public class UserDAO {
             DefaultTableModel model = new DefaultTableModel();
 
             //agredgar las columnas al modelo
-            for (int i = 1; i <= columnCount; i++) {
-                model.addColumn(metadata.getColumnName(i));
-            }
+            model.addColumn("Nombre");
+            model.addColumn("Apellido paterno");
+            model.addColumn("Apellido materno");
+            model.addColumn("RFC");
+            model.addColumn("CURP");
+            model.addColumn("Puesto");
+            model.addColumn("Delegación");
 
             //agregar las filas al modelo
             while (rs.next()) {
@@ -144,8 +148,6 @@ public class UserDAO {
                 }
                 model.addRow(rowData);
             }
-            System.out.println("Tabla creada");
-
             table.setModel(model);
         } catch (SQLException e) {
             System.err.println("Error buscando personal: ");

@@ -9,12 +9,14 @@ package views;
  * @author SSM01
  */
 public class Error extends javax.swing.JFrame {
+    String mensaje;
 
     /**
      * Creates new form Guardado
      */
-    public Error() {
+    public Error(String mensaje) {
         initComponents();
+        this.mensajeException.setText(mensaje);
     }
 
     /**
@@ -29,6 +31,7 @@ public class Error extends javax.swing.JFrame {
         jLabel2 = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
+        mensajeException = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setAlwaysOnTop(true);
@@ -44,8 +47,8 @@ public class Error extends javax.swing.JFrame {
         getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 50, -1, -1));
 
         jLabel1.setFont(new java.awt.Font("Arial", 1, 24)); // NOI18N
-        jLabel1.setText("Error guardando la informacion");
-        getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 110, -1, -1));
+        jLabel1.setText("ERROR");
+        getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 50, -1, -1));
 
         jLabel3.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
         jLabel3.setText("x");
@@ -55,6 +58,9 @@ public class Error extends javax.swing.JFrame {
             }
         });
         getContentPane().add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(580, 10, -1, -1));
+
+        mensajeException.setText("mensaje");
+        getContentPane().add(mensajeException, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 120, -1, -1));
 
         pack();
         setLocationRelativeTo(null);
@@ -95,7 +101,7 @@ public class Error extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new Error().setVisible(true);
+                new Error(" ").setVisible(true);
             }
         });
     }
@@ -104,5 +110,6 @@ public class Error extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel mensajeException;
     // End of variables declaration//GEN-END:variables
 }

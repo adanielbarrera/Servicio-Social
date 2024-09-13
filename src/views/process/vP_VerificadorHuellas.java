@@ -8,6 +8,7 @@ import controllers.LectorHuella;
 import java.awt.Image;
 import javax.swing.ImageIcon;
 import models.Personal;
+import views.Error;
 
 /**
  *
@@ -20,6 +21,7 @@ public class vP_VerificadorHuellas extends javax.swing.JPanel {
      */
     private LectorHuella lector = LectorHuella.getInstance();
     private Personal personal = Personal.getInstance();
+
     public vP_VerificadorHuellas() {
         initComponents();
         lector.esProcesoDeVerificacion = true;
@@ -37,7 +39,12 @@ public class vP_VerificadorHuellas extends javax.swing.JPanel {
 
         title = new javax.swing.JLabel();
         imagenHuella = new javax.swing.JLabel();
+        tarjetaPersonal = new javax.swing.JPanel();
+        fotoPersonal = fotoPersonal = new FotoPanel();
         nombre = new javax.swing.JLabel();
+        curp = new javax.swing.JLabel();
+        rfc = new javax.swing.JLabel();
+        delegacion = new javax.swing.JLabel();
 
         setMaximumSize(new java.awt.Dimension(900, 500));
         setMinimumSize(new java.awt.Dimension(900, 500));
@@ -50,7 +57,25 @@ public class vP_VerificadorHuellas extends javax.swing.JPanel {
         title.setText("Verificador de huellas digitales");
         add(title, new org.netbeans.lib.awtextra.AbsoluteConstraints(6, 6, 888, -1));
         add(imagenHuella, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 160, 130, 160));
-        add(nombre, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 150, -1, -1));
+
+        tarjetaPersonal.setBackground(new java.awt.Color(255, 255, 255));
+        tarjetaPersonal.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+        tarjetaPersonal.add(fotoPersonal, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 20, 100, 110));
+
+        nombre.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        nombre.setText("Nombre:");
+        tarjetaPersonal.add(nombre, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 160, 190, -1));
+
+        curp.setText("CURP: ");
+        tarjetaPersonal.add(curp, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 190, -1, -1));
+
+        rfc.setText("RFC: ");
+        tarjetaPersonal.add(rfc, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 230, -1, -1));
+
+        delegacion.setText("Delegación: ");
+        tarjetaPersonal.add(delegacion, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 260, -1, -1));
+
+        add(tarjetaPersonal, new org.netbeans.lib.awtextra.AbsoluteConstraints(560, 60, 290, 360));
     }// </editor-fold>//GEN-END:initComponents
 
     public void actualizarJLabelConHuella(Image image) {
@@ -58,19 +83,29 @@ public class vP_VerificadorHuellas extends javax.swing.JPanel {
                 image.getScaledInstance(imagenHuella.getWidth(), imagenHuella.getHeight(), Image.SCALE_DEFAULT)));
         repaint();
     }
-    
-    public void actualizarInfo(Personal personal){
-        if(personal != null){
-        nombre.setText(personal.getNombre()+" "+personal.getApePaterno()+" "+personal.getApeMaterno());
-        }
-        else{
-            nombre.setText("no encontrado");
+
+    public void actualizarInfo(Personal personal) {
+        if (personal != null) {
+            nombre.setText("Nombre: " + personal.getNombre() + " " + personal.getApePaterno() + " " + personal.getApeMaterno());
+            curp.setText("CURP: " + personal.getcURP());
+            rfc.setText("RFC: " + personal.getrFC());
+            ((FotoPanel)fotoPersonal).setImage(personal.getFoto());
+
+            //seguir mostrando informacion
+        } else {
+            Error err = new Error("Personal no encontrado");
+            err.setVisible(true);
         }
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel curp;
+    private javax.swing.JLabel delegacion;
+    private javax.swing.JPanel fotoPersonal;
     private javax.swing.JLabel imagenHuella;
     private javax.swing.JLabel nombre;
+    private javax.swing.JLabel rfc;
+    private javax.swing.JPanel tarjetaPersonal;
     private javax.swing.JLabel title;
     // End of variables declaration//GEN-END:variables
 }

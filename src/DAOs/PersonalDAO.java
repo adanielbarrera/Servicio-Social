@@ -4,6 +4,8 @@
  */
 package DAOs;
 
+import Exceptions.FotoException;
+import Exceptions.HuellaException;
 import com.digitalpersona.onetouch.DPFPGlobal;
 import com.digitalpersona.onetouch.DPFPTemplate;
 import java.awt.image.BufferedImage;
@@ -68,13 +70,12 @@ public class PersonalDAO {
                     Camara camara = new Camara();
                     BufferedImage foto = camara.convertirBytesABufferedImage(fotoBytes);
                     personal.setFoto(foto);
-                } else {
-                    BufferedImage foto = ImageIO.read(getClass().getResource("/resources/icon/defaultPhoto.jpg"));
-                    personal.setFoto(foto);
                 }
             }
         } catch (SQLException e) {
             System.err.println("Error: " + e);
+        } finally {
+            cerrarRecursos(rs, pstmt, conn);
         }
         return personal;
     }
@@ -104,52 +105,56 @@ public class PersonalDAO {
 
     public void agregarHuella(String dedo, DPFPTemplate template) {
         huellasMap.put(dedo, template);
-        System.out.println("guardado en map");
-        System.out.println(huellasMap.size());
     }
 
-    public void guardarBiometricos(byte[] foto) {
-        if (huellasMap.size() >= 5) {
-            System.out.println("guardando");
-            Personal personal = Personal.getInstance();
-            int id = personal.getId();
+    public void guardarBiometricos(byte[] foto) throws HuellaException, FotoException {
+        if (foto != null) {
+            if (huellasMap.size() >= 5) {
+                Personal personal = Personal.getInstance();
+                int id = personal.getId();
 
-            String sql = "insert datosBiometricos values( "
-                    + "?,"
-                    + "?, "
-                    + "?, "
-                    + "?, "
-                    + "?, "
-                    + "?,"
-                    + "?, "
-                    + "null,"
-                    + "null"
-                    + ")";
-            try {
-                conn = conexion.Conectar(3);
-                pstmt = conn.prepareStatement(sql);
-                pstmt.setBytes(2, huellasMap.get("pulgar derecho").serialize());
-                pstmt.setBytes(3, huellasMap.get("indice derecho").serialize());
-                pstmt.setBytes(4, huellasMap.get("medio").serialize());
-                pstmt.setBytes(5, huellasMap.get("pulgar izquierdo").serialize());
-                pstmt.setBytes(6, huellasMap.get("indice izquierdo").serialize());
-                pstmt.setBytes(7, foto);
-                pstmt.setInt(1, id);
-                System.out.println(sql);
+                String sql = "insert datosBiometricos values( "
+                        + "?,"
+                        + "?, "
+                        + "?, "
+                        + "?, "
+                        + "?, "
+                        + "?,"
+                        + "?, "
+                        + "null,"
+                        + "null"
+                        + ")";
+                try {
+                    conn = conexion.Conectar(3);
+                    pstmt = conn.prepareStatement(sql);
+                    pstmt.setBytes(2, huellasMap.get("pulgar derecho").serialize());
+                    pstmt.setBytes(3, huellasMap.get("indice derecho").serialize());
+                    pstmt.setBytes(4, huellasMap.get("medio").serialize());
+                    pstmt.setBytes(5, huellasMap.get("pulgar izquierdo").serialize());
+                    pstmt.setBytes(6, huellasMap.get("indice izquierdo").serialize());
+                    pstmt.setBytes(7, foto);
+                    pstmt.setInt(1, id);
 
-                int filasActualizadas = pstmt.executeUpdate();
-                System.out.println("ejecutado" + filasActualizadas);
-                if (filasActualizadas > 0) {
-                    System.out.println("Huellas y foto guardadas correctamente para el RFC: " + personal.getrFC());
+                    int filasActualizadas = pstmt.executeUpdate();
+                    System.out.println("ejecutado" + filasActualizadas);
+
+                    if (filasActualizadas > 0) {
+                        System.out.println("Huellas y foto guardadas correctamente para el RFC: " + personal.getrFC());
+                    }
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                } finally {
+                    //llimpiar el map despues de guardar
+                    huellasMap.clear();
+                    personal.setFoto(null);
+                    cerrarRecursos(rs, pstmt, conn);
                 }
-            } catch (SQLException e) {
-                e.printStackTrace();
-            } finally {
-                //llimpiar el map despues de guardar
-                huellasMap.clear();
+
+            } else {
+                throw new HuellaException("No se han leido todas las huellas");
             }
         } else {
-            System.out.println("Aun no se han capturado todas las huellas");
+            throw new FotoException("Falta registrar la foto");
         }
     }
 
@@ -173,6 +178,8 @@ public class PersonalDAO {
             }
         } catch (SQLException e) {
             e.printStackTrace();
+        } finally {
+            cerrarRecursos(rs, pstmt, conn);
         }
     }
 
@@ -195,6 +202,8 @@ public class PersonalDAO {
         } catch (SQLException e) {
             System.err.println("Error de SQL: ");
             e.printStackTrace();
+        } finally {
+            cerrarRecursos(rs, pstmt, conn);
         }
         return false;
     }
@@ -218,6 +227,8 @@ public class PersonalDAO {
             } catch (SQLException e) {
                 System.err.println("Error de SQl");
                 e.printStackTrace();
+            } finally {
+                cerrarRecursos(rs, pstmt, conn);
             }
         }
         return false;
@@ -247,6 +258,8 @@ public class PersonalDAO {
             } catch (SQLException e) {
                 System.err.println("Error registrando personal");
                 e.printStackTrace();
+            } finally {
+                cerrarRecursos(rs, pstmt, conn);
             }
 
         }
@@ -282,35 +295,45 @@ public class PersonalDAO {
             }
         } catch (SQLException e) {
             e.printStackTrace();
+        } finally {
+            cerrarRecursos(rs, pstmt, conn);
         }
     }
 
-    public void reemplazarHuellas(Personal personal) {
-        String sql = "UPDATE datosBiometricos "
-                + "SET db_huella1 = ?,"
-                + "db_huella2 = ?,"
-                + "db_huella3 = ?,"
-                + "db_huella4 = ?,"
-                + "db_huella5 = ? "
-                + "WHERE dpe_id = ?";
-        try {
-            conn = conexion.Conectar(3);
-            pstmt = conn.prepareStatement(sql);
-            pstmt.setInt(6, personal.getId());
-            pstmt.setBytes(1, huellasMap.get("pulgar derecho").serialize());
-            pstmt.setBytes(2, huellasMap.get("indice derecho").serialize());
-            pstmt.setBytes(3, huellasMap.get("medio").serialize());
-            pstmt.setBytes(4, huellasMap.get("pulgar izquierdo").serialize());
-            pstmt.setBytes(5, huellasMap.get("indice izquierdo").serialize());
+    public void reemplazarHuellas(Personal personal) throws HuellaException {
 
-            int filasActualizadas = pstmt.executeUpdate();
-            if (filasActualizadas > 0) {
-                System.out.println(filasActualizadas+"remplazadas con exito para el personal: "+personal.getId());
+        if (huellasMap.size() >= 5) {
+            String sql = "UPDATE datosBiometricos "
+                    + "SET db_huella1 = ?,"
+                    + "db_huella2 = ?,"
+                    + "db_huella3 = ?,"
+                    + "db_huella4 = ?,"
+                    + "db_huella5 = ? "
+                    + "WHERE dpe_id = ?";
+            try {
+                conn = conexion.Conectar(3);
+                pstmt = conn.prepareStatement(sql);
+                pstmt.setInt(6, personal.getId());
+                pstmt.setBytes(1, huellasMap.get("pulgar derecho").serialize());
+                pstmt.setBytes(2, huellasMap.get("indice derecho").serialize());
+                pstmt.setBytes(3, huellasMap.get("medio").serialize());
+                pstmt.setBytes(4, huellasMap.get("pulgar izquierdo").serialize());
+                pstmt.setBytes(5, huellasMap.get("indice izquierdo").serialize());
+
+                int filasActualizadas = pstmt.executeUpdate();
+                if (filasActualizadas > 0) {
+                    System.out.println(filasActualizadas + "remplazadas con exito para el personal: " + personal.getId());
+                }
+
+            } catch (SQLException e) {
+                e.printStackTrace();
+            } finally {
+                cerrarRecursos(rs, pstmt, conn);
             }
-
-        } catch (SQLException e) {
-            e.printStackTrace();
+        } else {
+            throw new HuellaException("No se han leido todas las huellas");
         }
+
     }
 
     public Map<Integer, DPFPTemplate> obtenerTodasLasPlatillas() {
@@ -320,7 +343,7 @@ public class PersonalDAO {
         try {
             conn = conexion.Conectar(3);
             pstmt = conn.prepareStatement(sql);
-            
+
             rs = pstmt.executeQuery();
 
             while (rs.next()) {
@@ -335,46 +358,48 @@ public class PersonalDAO {
                 // Convertir los arrays de bytes a DPFPTemplate y agregar a la lista
                 if (huella1 != null) {
                     DPFPTemplate template1 = DPFPGlobal.getTemplateFactory().createTemplate(huella1);
-                    plantillas.put(id,template1);
+                    plantillas.put(id, template1);
                 }
                 if (huella2 != null) {
                     DPFPTemplate template2 = DPFPGlobal.getTemplateFactory().createTemplate(huella2);
-                    plantillas.put(id,template2);
+                    plantillas.put(id, template2);
                 }
                 if (huella3 != null) {
                     DPFPTemplate template3 = DPFPGlobal.getTemplateFactory().createTemplate(huella3);
-                    plantillas.put(id,template3);
+                    plantillas.put(id, template3);
                 }
                 if (huella4 != null) {
                     DPFPTemplate template4 = DPFPGlobal.getTemplateFactory().createTemplate(huella4);
-                    plantillas.put(id,template4);
+                    plantillas.put(id, template4);
                 }
                 if (huella5 != null) {
                     DPFPTemplate template5 = DPFPGlobal.getTemplateFactory().createTemplate(huella5);
-                    plantillas.put(id,template5);
+                    plantillas.put(id, template5);
                 }
             }
 
-            }catch (SQLException e) {
+        } catch (SQLException e) {
             e.printStackTrace();
+        } finally {
+            cerrarRecursos(rs, pstmt, conn);
         }
-            return plantillas;
-        }
+        return plantillas;
+    }
 
-    public Personal getPersonalByID(int id){
+    public Personal getPersonalByID(int id) {
         String sql = "SELECT * "
                 + "FROM datosPersonal "
                 + "WHERE dpe_id = ?";
         Personal personal = null;
-        
-        try{
+
+        try {
             conn = conexion.Conectar(3);
             pstmt = conn.prepareStatement(sql);
             pstmt.setInt(1, id);
-            
+
             rs = pstmt.executeQuery();
-            if(rs.next()){
-                
+            if (rs.next()) {
+
                 personal = Personal.getInstance();
                 personal.setNombre(rs.getString("dpe_nombre"));
                 personal.setApePaterno(rs.getString("dpe_appat"));
@@ -383,9 +408,25 @@ public class PersonalDAO {
                 personal.setcURP(rs.getString("dpe_curp"));
                 personal.setPuesto(rs.getString("dpe_puesto"));
             }
-        }catch(SQLException e){
+        } catch (SQLException e) {
             e.printStackTrace();
+        } finally {
+            cerrarRecursos(rs, pstmt, conn);
         }
         return personal;
+    }
+
+    private void cerrarRecursos(ResultSet rs, PreparedStatement pstmt, Connection conn) {
+        try {
+            if (rs != null) {
+                rs.close();
+            }
+            if (pstmt != null) {
+                pstmt.close();
+            }
+            conexion.Desconectar();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 }

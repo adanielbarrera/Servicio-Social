@@ -5,6 +5,7 @@
 package controllers;
 
 import DAOs.PersonalDAO;
+import Exceptions.HuellaException;
 import com.digitalpersona.onetouch.DPFPDataPurpose;
 import com.digitalpersona.onetouch.DPFPFeatureSet;
 import com.digitalpersona.onetouch.DPFPGlobal;
@@ -25,9 +26,12 @@ import java.awt.Image;
 import java.awt.image.BufferedImage;
 import java.util.List;
 import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import models.Personal;
 import views.process.vP_CapturaHuellas;
 import views.process.vP_VerificadorHuellas;
+import views.Error;
 
 /**
  *
@@ -108,13 +112,18 @@ public class LectorHuella {
             @Override
             public void dataAcquired(DPFPDataEvent dpfpde) {
                 System.out.println("Adquiri datos");
-                procesarMuestra(dpfpde.getSample());
+                try {
+                    procesarMuestra(dpfpde.getSample());
+                } catch (HuellaException ex) {
+                    Error err = new Error(ex.getMessage());
+                    err.setVisible(true);
+                }
             }
         }
         );
     }
 
-    public void procesarMuestra(DPFPSample sample) {
+    public void procesarMuestra(DPFPSample sample) throws HuellaException {
         Image imagenHuella = crearImagenHuella(sample);
 
         if (esProcesoDeVerificacion) {
@@ -139,7 +148,7 @@ public class LectorHuella {
         System.out.println("Dedo seleccionado para enrollment: " + dedoSeleccionado);
     }
 
-    public void procesarEnrollment(DPFPSample sample) {
+    public void procesarEnrollment(DPFPSample sample) throws HuellaException{
         try {
             DPFPFeatureSet features = extraerFeatures(sample, DPFPDataPurpose.DATA_PURPOSE_ENROLLMENT);
             reclutador.addFeatures(features);
@@ -157,7 +166,7 @@ public class LectorHuella {
                 System.out.println("siga capturando");
             }
         } catch (DPFPImageQualityException e) {
-            manejarError("Error de calidad de imagen durante el enrollment: ", e);
+            throw new HuellaException("Verificar lectura de un solo dedo");
         }
     }
 
