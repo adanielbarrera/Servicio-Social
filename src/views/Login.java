@@ -6,15 +6,6 @@ package views;
 
 import Servicios.UserServicios;
 import java.awt.Cursor;
-import java.io.IOException;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.swing.ImageIcon;
-import javax.swing.JOptionPane;
-import models.ProcesosDB;
 
 /**
  *
@@ -27,6 +18,7 @@ public class Login extends javax.swing.JFrame {
     //PreparedStatement pstmt =   null;
     int mouseX, mouseY;
     public Cursor cursor; //variable cursor
+
     public Login() {
         setUndecorated(true); //ocultar la barra de titulo
         initComponents();
@@ -181,7 +173,7 @@ public class Login extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void closebttn(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_closebttn
-       dispose();
+        System.exit(0);
     }//GEN-LAST:event_closebttn
 
     private void closebttnMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_closebttnMouseEntered
@@ -189,8 +181,8 @@ public class Login extends javax.swing.JFrame {
     }//GEN-LAST:event_closebttnMouseEntered
 
     private void minimizebttnMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_minimizebttnMouseClicked
-       //minimizar la ventana
-       setState(Login.ICONIFIED);
+        //minimizar la ventana
+        setState(Login.ICONIFIED);
     }//GEN-LAST:event_minimizebttnMouseClicked
 
     private void minimizebttnMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_minimizebttnMouseEntered
@@ -206,7 +198,7 @@ public class Login extends javax.swing.JFrame {
         // Obtener la posición actual de la ventana y moverla según la posición del mouse
         int x = evt.getXOnScreen();
         int y = evt.getYOnScreen();
-        
+
         setLocation(x - mouseX, y - mouseY);
     }//GEN-LAST:event_titlePanelMouseDragged
 
@@ -215,35 +207,35 @@ public class Login extends javax.swing.JFrame {
     }//GEN-LAST:event_loginCardMouseEntered
 
     private void loginBttnMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_loginBttnMouseEntered
-       loginBttn.setCursor(new Cursor(cursor.HAND_CURSOR));
-       loginBttn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/icon/login_hover.png")));
-       loginBttn.setLocation(loginBttn.getX()-2, loginBttn.getY()-2);
+        loginBttn.setCursor(new Cursor(cursor.HAND_CURSOR));
+        loginBttn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/icon/login_hover.png")));
+        loginBttn.setLocation(loginBttn.getX() - 2, loginBttn.getY() - 2);
     }//GEN-LAST:event_loginBttnMouseEntered
 
     private void loginBttnMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_loginBttnMouseClicked
-       UserServicios usuarioServicio = new UserServicios();
+        UserServicios usuarioServicio = new UserServicios();
         String user = userField.getText();
-       String password = passwordField.getText();
-       
-       boolean exito = usuarioServicio.iniciarSesion(user, password);
-        
-       if(exito == true){
-           usuarioServicio.buscarUsuario(user);
-           this.dispose();
-           vMain vMain = new vMain();
-           vMain.setVisible(true);
-       }else{
-           if(user.isEmpty() || password.isEmpty()){
-           errorLoginlbl.setText("Los campos no pueden estar vacios");
-            }else{
-                errorLoginlbl.setText("Usuario y/o contraseña incorrectos" );
+        String password = passwordField.getText();
+
+        boolean exito = usuarioServicio.iniciarSesion(user, password);
+
+        if (exito == true) {
+            usuarioServicio.buscarUsuario(user);
+            this.dispose();
+            vMain vMain = new vMain();
+            vMain.setVisible(true);
+        } else {
+            if (user.isEmpty() || password.isEmpty()) {
+                errorLoginlbl.setText("Los campos no pueden estar vacios");
+            } else {
+                errorLoginlbl.setText("Usuario y/o contraseña incorrectos");
             }
-       }
+        }
     }//GEN-LAST:event_loginBttnMouseClicked
 
     private void loginBttnMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_loginBttnMouseExited
         loginBttn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/icon/login.png")));
-         loginBttn.setLocation(loginBttn.getX()+2, loginBttn.getY()+2);
+        loginBttn.setLocation(loginBttn.getX() + 2, loginBttn.getY() + 2);
     }//GEN-LAST:event_loginBttnMouseExited
 
     private void titlePanelMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_titlePanelMousePressed
@@ -253,24 +245,24 @@ public class Login extends javax.swing.JFrame {
     }//GEN-LAST:event_titlePanelMousePressed
 //handler para que cuando se presione enter en la password se ejecute la accion del boton
     private void passwordFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_passwordFieldActionPerformed
-            //no se puede usar el metodo doClick para simular la presion del boton, ya que el elemento loginBttn no es en si un boton si no una lbl
+        //no se puede usar el metodo doClick para simular la presion del boton, ya que el elemento loginBttn no es en si un boton si no una lbl
         UserServicios usuarioServicio = new UserServicios();
-       String user = userField.getText();
-       String password = passwordField.getText();
-       boolean exito = usuarioServicio.iniciarSesion(user, password);
-        
-       if(exito){
-           usuarioServicio.buscarUsuario(user);
-           this.dispose();
-           vMain vMain = new vMain();
-           vMain.setVisible(true);
-       }else{
-           if(user.isEmpty() || password.isEmpty()){
-           errorLoginlbl.setText("Los campos no pueden estar vacios");
-            }else{
-                errorLoginlbl.setText("Usuario y/o contraseña incorrectos" );
+        String user = userField.getText();
+        String password = passwordField.getText();
+        boolean exito = usuarioServicio.iniciarSesion(user, password);
+
+        if (exito) {
+            usuarioServicio.buscarUsuario(user);
+            this.dispose();
+            vMain vMain = new vMain();
+            vMain.setVisible(true);
+        } else {
+            if (user.isEmpty() || password.isEmpty()) {
+                errorLoginlbl.setText("Los campos no pueden estar vacios");
+            } else {
+                errorLoginlbl.setText("Usuario y/o contraseña incorrectos");
             }
-       }       
+        }
     }//GEN-LAST:event_passwordFieldActionPerformed
 
     /**
@@ -299,7 +291,7 @@ public class Login extends javax.swing.JFrame {
             java.util.logging.Logger.getLogger(Login.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
-       
+
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {

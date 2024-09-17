@@ -16,10 +16,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-import javax.imageio.ImageIO;
 import controllers.Camara;
-import java.io.ByteArrayInputStream;
-import java.io.ObjectInputStream;
 import java.util.HashMap;
 import java.util.Map;
 import javax.swing.JTable;
@@ -388,8 +385,9 @@ public class PersonalDAO {
 
     public Personal getPersonalByID(int id) {
         String sql = "SELECT * "
-                + "FROM datosPersonal "
-                + "WHERE dpe_id = ?";
+                + "FROM datosBiometricos "
+                + "inner join datosPersonal on datosPersonal.dpe_id = datosBiometricos.dpe_id "
+                + "WHERE datosPersonal.dpe_id = ?";
         Personal personal = null;
 
         try {
@@ -407,6 +405,10 @@ public class PersonalDAO {
                 personal.setrFC(rs.getString("dpe_rfc"));
                 personal.setcURP(rs.getString("dpe_curp"));
                 personal.setPuesto(rs.getString("dpe_puesto"));
+                byte[] fotBytes = rs.getBytes("db_foto");
+                Camara camara = new Camara();
+                BufferedImage foto = camara.convertirBytesABufferedImage(fotBytes);
+                personal.setFoto(foto);
             }
         } catch (SQLException e) {
             e.printStackTrace();

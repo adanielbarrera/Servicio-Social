@@ -11,6 +11,7 @@ import java.awt.image.BufferedImage;
  * @author SSM01
  */
 public class Personal {
+
     private static Personal instance;
     private String nombre;
     private String apePaterno;
@@ -26,17 +27,15 @@ public class Personal {
     private byte[] huella4;
     private byte[] huella5;
 
-    public static Personal getInstance(){
-        if(instance == null){
+    public static Personal getInstance() {
+        if (instance == null) {
             instance = new Personal();
         }
         return instance;
     }
+
     public Personal() {
     }
-    
-    
-    
 
     public Personal(String nombre, String apePaterno, String apeMaterno, String rFC, String cURP, String puesto, BufferedImage foto, int id) {
         this.nombre = nombre;
@@ -152,7 +151,5 @@ public class Personal {
     public void setHuella5(byte[] huella5) {
         this.huella5 = huella5;
     }
-    
-    
-    
+
 }

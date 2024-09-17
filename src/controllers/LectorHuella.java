@@ -23,11 +23,7 @@ import com.digitalpersona.onetouch.processing.DPFPImageQualityException;
 import com.digitalpersona.onetouch.verification.DPFPVerification;
 import com.digitalpersona.onetouch.verification.DPFPVerificationResult;
 import java.awt.Image;
-import java.awt.image.BufferedImage;
-import java.util.List;
 import java.util.Map;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import models.Personal;
 import views.process.vP_CapturaHuellas;
 import views.process.vP_VerificadorHuellas;
@@ -125,7 +121,6 @@ public class LectorHuella {
 
     public void procesarMuestra(DPFPSample sample) throws HuellaException {
         Image imagenHuella = crearImagenHuella(sample);
-
         if (esProcesoDeVerificacion) {
             verificarHuella(sample);
             verif.actualizarJLabelConHuella(imagenHuella);
@@ -133,7 +128,6 @@ public class LectorHuella {
             procesarEnrollment(sample);
             vCaptura.actualizarJLabelConHuella(imagenHuella);
         }
-
     }
 
     private Image crearImagenHuella(DPFPSample sample) {

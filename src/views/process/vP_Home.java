@@ -8,6 +8,7 @@ import com.digitalpersona.onetouch.capture.event.DPFPSensorAdapter;
 import com.digitalpersona.onetouch.capture.event.DPFPSensorEvent;
 import com.github.sarxos.webcam.Webcam;
 import libraries.lStyle;
+import models.Usuario;
 
 /**
  *
@@ -19,6 +20,7 @@ public class vP_Home extends javax.swing.JPanel {
 
     private Webcam webcam;
     public DPFPCapture capturer;
+    Usuario user = Usuario.getInstance();
     
     public vP_Home() {
         /*initComponents();
@@ -29,6 +31,7 @@ public class vP_Home extends javax.swing.JPanel {
         this.capturer = capturer;
         initComponents();
         setDataMail();
+        iniciarUserCard();
     }
 
     @SuppressWarnings("unchecked")
@@ -42,7 +45,6 @@ public class vP_Home extends javax.swing.JPanel {
         userName = new javax.swing.JLabel();
         userJob = new javax.swing.JLabel();
         userDepartament = new javax.swing.JLabel();
-        userSite = new javax.swing.JLabel();
         subtitle = new javax.swing.JLabel();
         panelStatusFingerReader = new javax.swing.JPanel();
         iconStatusFingerReader = new javax.swing.JLabel();
@@ -84,24 +86,20 @@ public class vP_Home extends javax.swing.JPanel {
         );
         userPhotoLayout.setVerticalGroup(
             userPhotoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
+            .addGap(0, 92, Short.MAX_VALUE)
         );
 
         userName.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
         userName.setForeground(new java.awt.Color(51, 51, 51));
-        userName.setText("Juan Carlos Castillo Carrillo");
+        userName.setText("Nombre");
 
         userJob.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
         userJob.setForeground(new java.awt.Color(51, 51, 51));
-        userJob.setText("Jefe A de Proyecto");
+        userJob.setText("Puesto");
 
         userDepartament.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
         userDepartament.setForeground(new java.awt.Color(51, 51, 51));
-        userDepartament.setText("Departamento de Mantenimiento y Soporte de Aplicaciones");
-
-        userSite.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
-        userSite.setForeground(new java.awt.Color(51, 51, 51));
-        userSite.setText("Oficina Central");
+        userDepartament.setText("Delegacion");
 
         javax.swing.GroupLayout panelGeneralDataLayout = new javax.swing.GroupLayout(panelGeneralData);
         panelGeneralData.setLayout(panelGeneralDataLayout);
@@ -117,8 +115,7 @@ public class vP_Home extends javax.swing.JPanel {
                         .addGroup(panelGeneralDataLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(userName, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(userJob, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(userDepartament, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(userSite, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                            .addComponent(userDepartament, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                 .addGap(20, 20, 20))
         );
         panelGeneralDataLayout.setVerticalGroup(
@@ -127,16 +124,14 @@ public class vP_Home extends javax.swing.JPanel {
                 .addGap(16, 16, 16)
                 .addComponent(titlePanelGeneralData)
                 .addGap(18, 18, 18)
-                .addGroup(panelGeneralDataLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                .addGroup(panelGeneralDataLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(panelGeneralDataLayout.createSequentialGroup()
                         .addComponent(userName)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(userJob)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(userDepartament)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(userSite))
-                    .addComponent(userPhoto, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addComponent(userDepartament))
+                    .addComponent(userPhoto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(20, Short.MAX_VALUE))
         );
 
@@ -344,6 +339,13 @@ public class vP_Home extends javax.swing.JPanel {
         }
     }
     
+    public void iniciarUserCard(){
+        user = Usuario.getInstance();
+        userName.setText(user.getNombre());
+        userJob.setText(user.getPuesto());
+        userDepartament.setText(user.getLugarTrabajo());
+        
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel iconStatusCamera;
@@ -365,6 +367,5 @@ public class vP_Home extends javax.swing.JPanel {
     private javax.swing.JLabel userJob;
     private javax.swing.JLabel userName;
     private javax.swing.JPanel userPhoto;
-    private javax.swing.JLabel userSite;
     // End of variables declaration//GEN-END:variables
 }

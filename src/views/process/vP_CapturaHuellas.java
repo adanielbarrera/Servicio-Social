@@ -10,7 +10,6 @@ import java.awt.Color;
 import java.awt.Image;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
-import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.ImageIcon;
@@ -85,8 +84,8 @@ public class vP_CapturaHuellas extends javax.swing.JPanel {
         userName = new javax.swing.JLabel();
         userJob = new javax.swing.JLabel();
         userDepartament = new javax.swing.JLabel();
-        btnActualizar = new javax.swing.JButton();
         statusPersonal = new javax.swing.JLabel();
+        btnActualizar = new javax.swing.JButton();
         panelGeneralData1 = new javax.swing.JPanel();
         titlePanelGeneralData1 = new javax.swing.JLabel();
         jSeparator1 = new javax.swing.JSeparator();
@@ -95,13 +94,13 @@ public class vP_CapturaHuellas extends javax.swing.JPanel {
         btnCapturaHuellas3 = new javax.swing.JButton();
         userPhoto2 = userPhoto2 = new FotoPanel();
         jPanel1 = new javax.swing.JPanel();
-        btnPulgarDer = new javax.swing.JButton();
-        btnIndiceDer = new javax.swing.JButton();
-        btnMedio = new javax.swing.JButton();
-        btnPulgarIzq = new javax.swing.JButton();
-        btnIndiceIzq = new javax.swing.JButton();
         fingerprintImage = new javax.swing.JLabel();
         jProgressBar1 = new javax.swing.JProgressBar();
+        btnPulgarDerecho = new javax.swing.JButton();
+        btnIndiceDerecho = new javax.swing.JButton();
+        btnMedio = new javax.swing.JButton();
+        btnPulgarIzquierdo = new javax.swing.JButton();
+        btnIndiceIzquierdo = new javax.swing.JButton();
         btnRegistrar = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
@@ -193,28 +192,19 @@ public class vP_CapturaHuellas extends javax.swing.JPanel {
         userDepartament.setMinimumSize(new java.awt.Dimension(275, 14));
         userDepartament.setPreferredSize(new java.awt.Dimension(275, 14));
 
-        btnActualizar.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
-        btnActualizar.setForeground(new java.awt.Color(51, 51, 51));
+        statusPersonal.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
+        statusPersonal.setForeground(new java.awt.Color(51, 51, 51));
+        statusPersonal.setText("Para empezar seleccione personal...");
+
         btnActualizar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/icon/iFingerPrint-Dark.png"))); // NOI18N
         btnActualizar.setText("Reemplazar huellas digitales");
         btnActualizar.setBorder(null);
-        btnActualizar.setContentAreaFilled(false);
         btnActualizar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        btnActualizar.setFocusable(false);
-        btnActualizar.setIconTextGap(10);
-        btnActualizar.setMaximumSize(new java.awt.Dimension(190, 28));
-        btnActualizar.setMinimumSize(new java.awt.Dimension(190, 28));
-        btnActualizar.setOpaque(true);
-        btnActualizar.setPreferredSize(new java.awt.Dimension(190, 28));
         btnActualizar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnActualizarActionPerformed(evt);
             }
         });
-
-        statusPersonal.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
-        statusPersonal.setForeground(new java.awt.Color(51, 51, 51));
-        statusPersonal.setText("Para empezar seleccione personal...");
 
         javax.swing.GroupLayout panelGeneralDataLayout = new javax.swing.GroupLayout(panelGeneralData);
         panelGeneralData.setLayout(panelGeneralDataLayout);
@@ -232,12 +222,11 @@ public class vP_CapturaHuellas extends javax.swing.JPanel {
                                 .addComponent(userJob, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 275, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addComponent(userDepartament, javax.swing.GroupLayout.PREFERRED_SIZE, 275, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addComponent(userName, javax.swing.GroupLayout.PREFERRED_SIZE, 275, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(statusPersonal))))
-                .addGap(5, 5, 5))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelGeneralDataLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(btnActualizar, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(106, 106, 106))
+                            .addComponent(statusPersonal)))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelGeneralDataLayout.createSequentialGroup()
+                        .addComponent(btnActualizar, javax.swing.GroupLayout.PREFERRED_SIZE, 342, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(45, 45, 45)))
+                .addContainerGap(7, Short.MAX_VALUE))
         );
         panelGeneralDataLayout.setVerticalGroup(
             panelGeneralDataLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -257,10 +246,10 @@ public class vP_CapturaHuellas extends javax.swing.JPanel {
                         .addComponent(statusPersonal)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(btnActualizar, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(16, 16, 16))
+                .addGap(17, 17, 17))
         );
 
-        panelPersonal.add(panelGeneralData, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, -1, -1));
+        panelPersonal.add(panelGeneralData, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 420, -1));
 
         panelGeneralData1.setBackground(new java.awt.Color(255, 255, 255));
         panelGeneralData1.setForeground(new java.awt.Color(255, 255, 255));
@@ -322,106 +311,6 @@ public class vP_CapturaHuellas extends javax.swing.JPanel {
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        btnPulgarDer.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
-        btnPulgarDer.setForeground(new java.awt.Color(51, 51, 51));
-        btnPulgarDer.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/icon/iFingerPrint-Dark.png"))); // NOI18N
-        btnPulgarDer.setText("Pulgar derecho");
-        btnPulgarDer.setBorder(null);
-        btnPulgarDer.setContentAreaFilled(false);
-        btnPulgarDer.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        btnPulgarDer.setFocusable(false);
-        btnPulgarDer.setIconTextGap(10);
-        btnPulgarDer.setMaximumSize(new java.awt.Dimension(190, 28));
-        btnPulgarDer.setMinimumSize(new java.awt.Dimension(190, 28));
-        btnPulgarDer.setOpaque(true);
-        btnPulgarDer.setPreferredSize(new java.awt.Dimension(190, 28));
-        btnPulgarDer.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                btnPulgarDerMouseClicked(evt);
-            }
-        });
-        jPanel1.add(btnPulgarDer, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, -1, -1));
-
-        btnIndiceDer.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
-        btnIndiceDer.setForeground(new java.awt.Color(51, 51, 51));
-        btnIndiceDer.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/icon/iFingerPrint-Dark.png"))); // NOI18N
-        btnIndiceDer.setText("Índice derecho");
-        btnIndiceDer.setBorder(null);
-        btnIndiceDer.setContentAreaFilled(false);
-        btnIndiceDer.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        btnIndiceDer.setFocusable(false);
-        btnIndiceDer.setIconTextGap(10);
-        btnIndiceDer.setMaximumSize(new java.awt.Dimension(190, 28));
-        btnIndiceDer.setMinimumSize(new java.awt.Dimension(190, 28));
-        btnIndiceDer.setOpaque(true);
-        btnIndiceDer.setPreferredSize(new java.awt.Dimension(190, 28));
-        btnIndiceDer.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                btnIndiceDerMouseClicked(evt);
-            }
-        });
-        jPanel1.add(btnIndiceDer, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 50, -1, -1));
-
-        btnMedio.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
-        btnMedio.setForeground(new java.awt.Color(51, 51, 51));
-        btnMedio.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/icon/iFingerPrint-Dark.png"))); // NOI18N
-        btnMedio.setText("Medio derecho");
-        btnMedio.setBorder(null);
-        btnMedio.setContentAreaFilled(false);
-        btnMedio.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        btnMedio.setFocusable(false);
-        btnMedio.setIconTextGap(10);
-        btnMedio.setMaximumSize(new java.awt.Dimension(190, 28));
-        btnMedio.setMinimumSize(new java.awt.Dimension(190, 28));
-        btnMedio.setOpaque(true);
-        btnMedio.setPreferredSize(new java.awt.Dimension(190, 28));
-        btnMedio.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                btnMedioMouseClicked(evt);
-            }
-        });
-        jPanel1.add(btnMedio, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 90, -1, -1));
-
-        btnPulgarIzq.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
-        btnPulgarIzq.setForeground(new java.awt.Color(51, 51, 51));
-        btnPulgarIzq.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/icon/iFingerPrint-Dark.png"))); // NOI18N
-        btnPulgarIzq.setText("Pulgar izquierdo");
-        btnPulgarIzq.setBorder(null);
-        btnPulgarIzq.setContentAreaFilled(false);
-        btnPulgarIzq.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        btnPulgarIzq.setFocusable(false);
-        btnPulgarIzq.setIconTextGap(10);
-        btnPulgarIzq.setMaximumSize(new java.awt.Dimension(190, 28));
-        btnPulgarIzq.setMinimumSize(new java.awt.Dimension(190, 28));
-        btnPulgarIzq.setOpaque(true);
-        btnPulgarIzq.setPreferredSize(new java.awt.Dimension(190, 28));
-        btnPulgarIzq.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                btnPulgarIzqMouseClicked(evt);
-            }
-        });
-        jPanel1.add(btnPulgarIzq, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 130, -1, -1));
-
-        btnIndiceIzq.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
-        btnIndiceIzq.setForeground(new java.awt.Color(51, 51, 51));
-        btnIndiceIzq.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/icon/iFingerPrint-Dark.png"))); // NOI18N
-        btnIndiceIzq.setText("Índice izquierdo");
-        btnIndiceIzq.setBorder(null);
-        btnIndiceIzq.setContentAreaFilled(false);
-        btnIndiceIzq.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        btnIndiceIzq.setFocusable(false);
-        btnIndiceIzq.setIconTextGap(10);
-        btnIndiceIzq.setMaximumSize(new java.awt.Dimension(190, 28));
-        btnIndiceIzq.setMinimumSize(new java.awt.Dimension(190, 28));
-        btnIndiceIzq.setOpaque(true);
-        btnIndiceIzq.setPreferredSize(new java.awt.Dimension(190, 28));
-        btnIndiceIzq.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                btnIndiceIzqMouseClicked(evt);
-            }
-        });
-        jPanel1.add(btnIndiceIzq, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 170, -1, -1));
-
         fingerprintImage.setBackground(new java.awt.Color(214, 217, 223));
         fingerprintImage.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(214, 217, 223), 1, true));
         jPanel1.add(fingerprintImage, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 30, 163, 163));
@@ -429,25 +318,71 @@ public class vP_CapturaHuellas extends javax.swing.JPanel {
         jProgressBar1.setBorder(null);
         jPanel1.add(jProgressBar1, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 10, 163, -1));
 
-        btnRegistrar.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
-        btnRegistrar.setForeground(new java.awt.Color(51, 51, 51));
-        btnRegistrar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/icon/iCamera-Dark.png"))); // NOI18N
+        btnPulgarDerecho.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/icon/iFingerPrint-Dark.png"))); // NOI18N
+        btnPulgarDerecho.setText("Pulgar derecho");
+        btnPulgarDerecho.setBorder(null);
+        btnPulgarDerecho.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnPulgarDerecho.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnPulgarDerechoMouseClicked(evt);
+            }
+        });
+        jPanel1.add(btnPulgarDerecho, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 190, 30));
+
+        btnIndiceDerecho.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/icon/iFingerPrint-Dark.png"))); // NOI18N
+        btnIndiceDerecho.setText("Índice derecho");
+        btnIndiceDerecho.setBorder(null);
+        btnIndiceDerecho.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnIndiceDerecho.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnIndiceDerechoMouseClicked(evt);
+            }
+        });
+        jPanel1.add(btnIndiceDerecho, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 50, 190, 30));
+
+        btnMedio.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/icon/iFingerPrint-Dark.png"))); // NOI18N
+        btnMedio.setText("Medio");
+        btnMedio.setBorder(null);
+        btnMedio.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnMedio.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnMedioMouseClicked(evt);
+            }
+        });
+        jPanel1.add(btnMedio, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 90, 190, 30));
+
+        btnPulgarIzquierdo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/icon/iFingerPrint-Dark.png"))); // NOI18N
+        btnPulgarIzquierdo.setText("Pulgar izquierdo");
+        btnPulgarIzquierdo.setBorder(null);
+        btnPulgarIzquierdo.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnPulgarIzquierdo.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnPulgarIzquierdoMouseClicked(evt);
+            }
+        });
+        jPanel1.add(btnPulgarIzquierdo, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 130, 190, 30));
+
+        btnIndiceIzquierdo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/icon/iFingerPrint-Dark.png"))); // NOI18N
+        btnIndiceIzquierdo.setText("Índice izquierdo");
+        btnIndiceIzquierdo.setBorder(null);
+        btnIndiceIzquierdo.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnIndiceIzquierdo.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnIndiceIzquierdoMouseClicked(evt);
+            }
+        });
+        jPanel1.add(btnIndiceIzquierdo, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 170, 190, 30));
+
+        btnRegistrar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/icon/iUserAdd-Dark.png"))); // NOI18N
         btnRegistrar.setText("Guardar registro completo");
         btnRegistrar.setBorder(null);
-        btnRegistrar.setContentAreaFilled(false);
         btnRegistrar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        btnRegistrar.setFocusable(false);
-        btnRegistrar.setIconTextGap(10);
-        btnRegistrar.setMaximumSize(new java.awt.Dimension(190, 28));
-        btnRegistrar.setMinimumSize(new java.awt.Dimension(190, 28));
-        btnRegistrar.setOpaque(true);
-        btnRegistrar.setPreferredSize(new java.awt.Dimension(190, 28));
         btnRegistrar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnRegistrarActionPerformed(evt);
             }
         });
-        jPanel1.add(btnRegistrar, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 200, -1, -1));
+        jPanel1.add(btnRegistrar, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 200, 200, 30));
 
         javax.swing.GroupLayout panelGeneralData1Layout = new javax.swing.GroupLayout(panelGeneralData1);
         panelGeneralData1.setLayout(panelGeneralData1Layout);
@@ -479,13 +414,12 @@ public class vP_CapturaHuellas extends javax.swing.JPanel {
                 .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 5, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(13, Short.MAX_VALUE))
+                .addContainerGap(11, Short.MAX_VALUE))
         );
 
         panelPersonal.add(panelGeneralData1, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 10, 520, 450));
 
         jScrollPane1.setBorder(null);
-        jScrollPane1.setColumnHeader(null);
 
         jTable1.setModel(table.getModel());
         jTable1.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -497,7 +431,9 @@ public class vP_CapturaHuellas extends javax.swing.JPanel {
 
         panelPersonal.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 970, 470));
 
-        back.setFont(new java.awt.Font("Ebrima", 1, 18)); // NOI18N
+        back.setBackground(new java.awt.Color(246, 249, 252));
+        back.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
+        back.setForeground(new java.awt.Color(102, 102, 102));
         back.setText("<");
         back.setBorder(null);
         back.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -535,16 +471,19 @@ public class vP_CapturaHuellas extends javax.swing.JPanel {
             .addGroup(layout.createSequentialGroup()
                 .addGap(23, 23, 23)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(back)
-                    .addComponent(panelPersonal, javax.swing.GroupLayout.PREFERRED_SIZE, 969, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(panelPersonal, javax.swing.GroupLayout.PREFERRED_SIZE, 969, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(back, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(title)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 8, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -563,40 +502,14 @@ public class vP_CapturaHuellas extends javax.swing.JPanel {
 //boton para capturar la imagen de la camara
     private void btnCapturaHuellas3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnCapturaHuellas3MouseClicked
         capturarYMostrarImagen();
-
     }//GEN-LAST:event_btnCapturaHuellas3MouseClicked
-
-    private void btnPulgarDerMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnPulgarDerMouseClicked
-        btnPulgarDer.setBackground(lStyle.getBtnseleccionado());
-        lector.iniciarEnrollmentPorDedo("pulgar derecho");
-    }//GEN-LAST:event_btnPulgarDerMouseClicked
-
-    private void btnIndiceDerMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnIndiceDerMouseClicked
-        btnIndiceDer.setBackground(lStyle.getBtnseleccionado());
-        lector.iniciarEnrollmentPorDedo("indice derecho");
-    }//GEN-LAST:event_btnIndiceDerMouseClicked
-
-    private void btnMedioMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnMedioMouseClicked
-        btnMedio.setBackground(lStyle.getBtnseleccionado());
-        lector.iniciarEnrollmentPorDedo("medio");
-    }//GEN-LAST:event_btnMedioMouseClicked
-
-    private void btnPulgarIzqMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnPulgarIzqMouseClicked
-        btnPulgarIzq.setBackground(lStyle.getBtnseleccionado());
-        lector.iniciarEnrollmentPorDedo("pulgar izquierdo");
-    }//GEN-LAST:event_btnPulgarIzqMouseClicked
-
-    private void btnIndiceIzqMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnIndiceIzqMouseClicked
-        btnIndiceIzq.setBackground(lStyle.getBtnseleccionado());
-        lector.iniciarEnrollmentPorDedo("indice izquierdo");
-    }//GEN-LAST:event_btnIndiceIzqMouseClicked
 
     private void btnCapturaHuellas3MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnCapturaHuellas3MouseEntered
         btnCapturaHuellas3.setBackground(lStyle.getBtnseleccionado());
     }//GEN-LAST:event_btnCapturaHuellas3MouseEntered
 
     private void btnCapturaHuellas3MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnCapturaHuellas3MouseExited
-        btnCapturaHuellas3.setBackground(new Color(214, 217, 223));
+        btnCapturaHuellas3.setBackground(new Color(255, 255, 255));
     }//GEN-LAST:event_btnCapturaHuellas3MouseExited
 
     private void seekerKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_seekerKeyReleased
@@ -609,40 +522,6 @@ public class vP_CapturaHuellas extends javax.swing.JPanel {
             sorter.setRowFilter(RowFilter.regexFilter("(?i)" + textoBusqueda, 0, 1, 2));
         }
     }//GEN-LAST:event_seekerKeyReleased
-
-    private void btnRegistrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegistrarActionPerformed
-        if (!personalDAO.tieneBiometria(personal.getrFC())) {
-            //el personal no tiene nda registrado
-            byte[] foto = null;
-            try {
-                foto = camara.convertBufferedImageToBytes(personal.getFoto(), "png");
-                personalDAO.guardarBiometricos(foto);
-                limpiarUI();
-                guardado();
-            } catch (IOException | HuellaException | FotoException e) {
-                error(e.getMessage());
-            }
-        } else {
-            //el personal solova a actualizar las huellas
-            try {
-                personalDAO.reemplazarHuellas(personal);
-                guardado();
-                limpiarUI();
-            } catch (HuellaException | IOException e) {
-                error(e.getMessage());
-            }
-
-        }
-    }//GEN-LAST:event_btnRegistrarActionPerformed
-
-    private void btnActualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnActualizarActionPerformed
-        btnPulgarDer.setEnabled(true);
-        btnIndiceDer.setEnabled(true);
-        btnMedio.setEnabled(true);
-        btnPulgarIzq.setEnabled(true);
-        btnIndiceIzq.setEnabled(true);
-        btnRegistrar.setEnabled(true);
-    }//GEN-LAST:event_btnActualizarActionPerformed
 
     private void refreshActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_refreshActionPerformed
         table = userDAO.tablaPersonalPorDelegacion(user.getDeleg_clv());
@@ -679,12 +558,71 @@ public class vP_CapturaHuellas extends javax.swing.JPanel {
     }//GEN-LAST:event_backActionPerformed
 
     private void backMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_backMouseEntered
-   back.setBackground(lStyle.getBtnseleccionado());
+        back.setBackground(new Color(246, 249, 252));
+        back.setForeground(Color.BLUE);
     }//GEN-LAST:event_backMouseEntered
 
     private void backMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_backMouseExited
-   back.setBackground(new Color(255,255,255));
+        back.setForeground(new Color(102, 102, 102));
     }//GEN-LAST:event_backMouseExited
+
+    private void btnPulgarDerechoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnPulgarDerechoMouseClicked
+        btnPulgarDerecho.setBackground(lStyle.getBtnseleccionado());
+        lector.iniciarEnrollmentPorDedo("indice derecho");
+    }//GEN-LAST:event_btnPulgarDerechoMouseClicked
+
+    private void btnIndiceDerechoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnIndiceDerechoMouseClicked
+        btnIndiceDerecho.setBackground(lStyle.getBtnseleccionado());
+        lector.iniciarEnrollmentPorDedo("indice derecho");
+    }//GEN-LAST:event_btnIndiceDerechoMouseClicked
+
+    private void btnMedioMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnMedioMouseClicked
+        btnMedio.setBackground(lStyle.getBtnseleccionado());
+        lector.iniciarEnrollmentPorDedo("medio");
+    }//GEN-LAST:event_btnMedioMouseClicked
+
+    private void btnPulgarIzquierdoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnPulgarIzquierdoMouseClicked
+        btnPulgarIzquierdo.setBackground(lStyle.getBtnseleccionado());
+        lector.iniciarEnrollmentPorDedo("pulgar izquierdo");
+    }//GEN-LAST:event_btnPulgarIzquierdoMouseClicked
+
+    private void btnIndiceIzquierdoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnIndiceIzquierdoMouseClicked
+        btnIndiceIzquierdo.setBackground(lStyle.getBtnseleccionado());
+        lector.iniciarEnrollmentPorDedo("indice izquierdo");
+    }//GEN-LAST:event_btnIndiceIzquierdoMouseClicked
+
+    private void btnRegistrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegistrarActionPerformed
+        if (!personalDAO.tieneBiometria(personal.getrFC())) {
+            //el personal no tiene nda registrado
+            byte[] foto = null;
+            try {
+                foto = camara.convertBufferedImageToBytes(personal.getFoto(), "png");
+                personalDAO.guardarBiometricos(foto);
+                limpiarUI();
+                guardado();
+            } catch (IOException | HuellaException | FotoException e) {
+                error(e.getMessage());
+            }
+        } else {
+            //el personal solova a actualizar las huellas
+            try {
+                personalDAO.reemplazarHuellas(personal);
+                guardado();
+                limpiarUI();
+            } catch (HuellaException | IOException e) {
+                error(e.getMessage());
+            }
+        }
+    }//GEN-LAST:event_btnRegistrarActionPerformed
+
+    private void btnActualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnActualizarActionPerformed
+        btnPulgarDerecho.setEnabled(true);
+        btnIndiceDerecho.setEnabled(true);
+        btnMedio.setEnabled(true);
+        btnPulgarIzquierdo.setEnabled(true);
+        btnIndiceIzquierdo.setEnabled(true);
+        btnRegistrar.setEnabled(true);
+    }//GEN-LAST:event_btnActualizarActionPerformed
 
     private void mostrarImagen() {
         try {
@@ -737,15 +675,15 @@ public class vP_CapturaHuellas extends javax.swing.JPanel {
     private JButton obtenerBotonPorDedo(String dedoSeleccionado) {
         switch (dedoSeleccionado) {
             case "pulgar derecho":
-                return btnPulgarDer;
+                return btnPulgarDerecho;
             case "indice derecho":
-                return btnIndiceDer;
+                return btnIndiceDerecho;
             case "medio":
                 return btnMedio;
             case "pulgar izquierdo":
-                return btnPulgarIzq;
+                return btnPulgarIzquierdo;
             case "indice izquierdo":
-                return btnIndiceIzq;
+                return btnIndiceIzquierdo;
             default:
                 return null; // O lanza una excepción si es un caso inesperado
         }
@@ -771,12 +709,11 @@ public class vP_CapturaHuellas extends javax.swing.JPanel {
     }
 
     public void limpiarUI() throws IOException {
-        //((FotoPanel)userPhoto2).setImage(ImageIO.read(getClass().getResource("/resources/icon/defaultPhoto.jpg")));
-        btnPulgarDer.setBackground(new Color(214, 217, 223));
-        btnIndiceDer.setBackground(new Color(214, 217, 223));
+        btnPulgarDerecho.setBackground(new Color(214, 217, 223));
+        btnIndiceDerecho.setBackground(new Color(214, 217, 223));
         btnMedio.setBackground(new Color(214, 217, 223));
-        btnPulgarIzq.setBackground(new Color(214, 217, 223));
-        btnIndiceIzq.setBackground(new Color(214, 217, 223));
+        btnPulgarIzquierdo.setBackground(new Color(214, 217, 223));
+        btnIndiceIzquierdo.setBackground(new Color(214, 217, 223));
     }
 
     private void desplegarPersonal() {
@@ -847,11 +784,11 @@ public class vP_CapturaHuellas extends javax.swing.JPanel {
                 iconSeeker.setVisible(false);
                 refresh.setVisible(false);
                 separatorSeeker.setVisible(false);
-                btnPulgarDer.setEnabled(false);
-                btnIndiceDer.setEnabled(false);
+                btnPulgarDerecho.setEnabled(false);
+                btnIndiceDerecho.setEnabled(false);
                 btnMedio.setEnabled(false);
-                btnPulgarIzq.setEnabled(false);
-                btnIndiceIzq.setEnabled(false);
+                btnPulgarIzquierdo.setEnabled(false);
+                btnIndiceIzquierdo.setEnabled(false);
                 break;
             case "busqueda":
                 jScrollPane1.setVisible(true);
@@ -870,11 +807,11 @@ public class vP_CapturaHuellas extends javax.swing.JPanel {
     private javax.swing.JButton back;
     private javax.swing.JButton btnActualizar;
     private javax.swing.JButton btnCapturaHuellas3;
-    private javax.swing.JButton btnIndiceDer;
-    private javax.swing.JButton btnIndiceIzq;
+    private javax.swing.JButton btnIndiceDerecho;
+    private javax.swing.JButton btnIndiceIzquierdo;
     private javax.swing.JButton btnMedio;
-    private javax.swing.JButton btnPulgarDer;
-    private javax.swing.JButton btnPulgarIzq;
+    private javax.swing.JButton btnPulgarDerecho;
+    private javax.swing.JButton btnPulgarIzquierdo;
     private javax.swing.JButton btnRegistrar;
     private javax.swing.JLabel fingerprintImage;
     private javax.swing.JLabel iconSeeker;
