@@ -8,6 +8,8 @@ import DAOs.PersonalDAO;
 import java.io.ByteArrayOutputStream;
 import com.github.sarxos.webcam.Webcam;
 import com.github.sarxos.webcam.WebcamPanel;
+import java.awt.geom.AffineTransform;
+import java.awt.image.AffineTransformOp;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
@@ -35,6 +37,7 @@ public class Camara {
 
     //metodo para capturar una imagen de la camara
     public void capturarImagen() {
+
         imagenCapturada = webcam.getImage();
     }
 
@@ -47,7 +50,7 @@ public class Camara {
         if (webcamPanel == null) {
             try {
                 webcamPanel = new WebcamPanel(webcam);
-                webcamPanel.setMirrored(true);
+                webcamPanel.setMirrored(false);
             } catch (Exception e) {
                 System.err.println("Error inicializando camara: " + e);
             }
