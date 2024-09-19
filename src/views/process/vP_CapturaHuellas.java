@@ -30,7 +30,6 @@ import views.Guardado;
 import views.Error;
 import views.Utils;
 import static views.process.vP_CapturaHuellas.Dedo.*;
-import views.vMain;
 
 /**
  *
@@ -624,7 +623,7 @@ public class vP_CapturaHuellas extends javax.swing.JPanel {
                 break;
             case 4:
                 jProgressBar1.setValue(100);
-                buton.setBackground(lStyle.getBgSuccess());
+                //buton.setBackground(lStyle.getBgSuccess());
                 buton.setEnabled(false);
                 break;
         }
@@ -668,6 +667,7 @@ public class vP_CapturaHuellas extends javax.swing.JPanel {
     }
 
     public void limpiarUI() {
+        fingerprintImage.setIcon(null);
         btnPulgarDerecho.setBackground(new Color(214, 217, 223));
         btnIndiceDerecho.setBackground(new Color(214, 217, 223));
         btnMedio.setBackground(new Color(214, 217, 223));
@@ -755,6 +755,7 @@ public class vP_CapturaHuellas extends javax.swing.JPanel {
     }
 
     public void selectPersonal() {
+        limpiarUI();
         int filaSeleccionada = jTable1.getSelectedRow();
         if (filaSeleccionada != -1) { // Verifica que una fila esté realmente seleccionada
             // Obtener el modelo de la tabla
@@ -797,13 +798,11 @@ public class vP_CapturaHuellas extends javax.swing.JPanel {
 
 // Método generalizado para manejar clics
     private void manejarClick(JButton boton, Dedo dedo) {
-
         if (boton.isEnabled()) {
             limpiarUI();
             boton.setBackground(lStyle.getBtnseleccionado());
             lector.iniciarEnrollmentPorDedo(dedo.getNombre());
         }
-
     }
 
 
