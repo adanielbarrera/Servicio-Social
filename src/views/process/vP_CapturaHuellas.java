@@ -18,14 +18,18 @@ import libraries.lStyle;
 import controllers.Camara;
 import controllers.LectorHuella;
 import javax.imageio.ImageIO;
+import javax.swing.JFrame;
 import javax.swing.JTable;
 import javax.swing.RowFilter;
 import javax.swing.table.TableModel;
 import javax.swing.table.TableRowSorter;
 import models.Personal;
 import models.Usuario;
+import views.Confirmacion;
 import views.Guardado;
 import views.Error;
+import views.Utils;
+import views.vMain;
 
 /**
  *
@@ -43,6 +47,7 @@ public class vP_CapturaHuellas extends javax.swing.JPanel {
     private JTable table;
     private String RFC;
     TableRowSorter<TableModel> sorter;
+    private boolean primeraVez = true;
 
     public String getRFC() {
         return this.RFC;
@@ -504,24 +509,17 @@ public class vP_CapturaHuellas extends javax.swing.JPanel {
     }//GEN-LAST:event_refreshActionPerformed
 
     private void jTable1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MouseClicked
-        int filaSeleccionada = jTable1.getSelectedRow();
-        if (filaSeleccionada != -1) { // Verifica que una fila esté realmente seleccionada
-            // Obtener el modelo de la tabla
-            int filaModelo = jTable1.convertRowIndexToModel(filaSeleccionada);
-            TableModel modelo = jTable1.getModel();
-
-            // Obtener el valor de la columna específica, por ejemplo, nombre (columna 0) y apellido (columna 1)
-            String nombreCompleto = modelo.getValueAt(filaModelo, 0).toString() + " " + modelo.getValueAt(filaModelo, 1) + " " + modelo.getValueAt(filaModelo, 2);
-            try {
-                personal = personalDAO.getPersonalByNombreCompleto(nombreCompleto);
-            } catch (IOException ex) {
-                error(ex.getMessage());
-            }
-            //Codigo para cambiar lo que hay en el panel
-            desplegarPersonal();
-            panelGeneralData.setVisible(true);
+        JFrame frame = Utils.getFrame(vP_CapturaHuellas.this);
+        if (primeraVez) {
+            selectPersonal();
+            primeraVez = false;
         } else {
-            System.out.println("No hay ninguna fila seleccionada.");
+        // Crear y mostrar el diálogo de confirmación
+            Confirmacion confirmacion = new Confirmacion(frame);
+            confirmacion.setVisible(true);
+            if (confirmacion.isConfirmed()) {
+                selectPersonal();
+            }
         }
     }//GEN-LAST:event_jTable1MouseClicked
 
@@ -746,6 +744,28 @@ public class vP_CapturaHuellas extends javax.swing.JPanel {
                 panelGeneralData.setVisible(false);
                 panelGeneralData1.setVisible(false);
                 break;
+        }
+    }
+
+    public void selectPersonal() {
+        int filaSeleccionada = jTable1.getSelectedRow();
+        if (filaSeleccionada != -1) { // Verifica que una fila esté realmente seleccionada
+            // Obtener el modelo de la tabla
+            int filaModelo = jTable1.convertRowIndexToModel(filaSeleccionada);
+            TableModel modelo = jTable1.getModel();
+
+            // Obtener el valor de la columna específica, por ejemplo, nombre (columna 0) y apellido (columna 1)
+            String nombreCompleto = modelo.getValueAt(filaModelo, 0).toString() + " " + modelo.getValueAt(filaModelo, 1) + " " + modelo.getValueAt(filaModelo, 2);
+            try {
+                personal = personalDAO.getPersonalByNombreCompleto(nombreCompleto);
+            } catch (IOException ex) {
+                error(ex.getMessage());
+            }
+            //Codigo para cambiar lo que hay en el panel
+            desplegarPersonal();
+            panelGeneralData.setVisible(true);
+        } else {
+            System.out.println("No hay ninguna fila seleccionada.");
         }
     }
 
