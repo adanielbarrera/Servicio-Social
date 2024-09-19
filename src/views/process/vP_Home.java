@@ -1,12 +1,11 @@
 package views.process;
 
-import com.digitalpersona.onetouch.DPFPGlobal;
-import com.digitalpersona.onetouch.capture.DPFPCapture;
 import com.digitalpersona.onetouch.capture.event.DPFPReaderStatusAdapter;
 import com.digitalpersona.onetouch.capture.event.DPFPReaderStatusEvent;
 import com.digitalpersona.onetouch.capture.event.DPFPSensorAdapter;
 import com.digitalpersona.onetouch.capture.event.DPFPSensorEvent;
 import com.github.sarxos.webcam.Webcam;
+import controllers.LectorHuella;
 import libraries.lStyle;
 import models.Usuario;
 
@@ -19,16 +18,17 @@ public class vP_Home extends javax.swing.JPanel {
     lStyle lStyle = new lStyle();
 
     private Webcam webcam;
-    public DPFPCapture capturer;
+    public LectorHuella lector;
     Usuario user = Usuario.getInstance();
-    
+
     public vP_Home() {
         /*initComponents();
         setDataMail();*/
+        lector = LectorHuella.getInstance();
     }
-    
-    public vP_Home(DPFPCapture capturer) {
-        this.capturer = capturer;
+
+    public vP_Home(LectorHuella lector) {
+        this.lector = lector;
         initComponents();
         setDataMail();
         iniciarUserCard();
@@ -294,11 +294,11 @@ public class vP_Home extends javax.swing.JPanel {
         VPH_CameraConnected();
         VPH_FingerReagerConnected();
     }
-    
+
     public void VPH_FingerReagerConnected() {
-        
-        if(this.capturer != null) {
-            if(this.capturer.isStarted()) {
+
+        if (this.lector != null) {
+            if (this.lector.isStarted()) {
                 stausFingerReader.setText("Dispositivo conectado");
                 panelStatusFingerReader.setBackground(lStyle.getBgSuccess());
                 stausReader.setText("Aqui se muestra la acción del lector");
@@ -312,8 +312,24 @@ public class vP_Home extends javax.swing.JPanel {
             panelStatusFingerReader.setBackground(lStyle.getBgDanger());
             stausReader.setText("Favor de validar la conexión con el lector");
         }
-        
-        this.capturer.addSensorListener(new DPFPSensorAdapter() {
+        this.lector.reader.addReaderStatusListener(new DPFPReaderStatusAdapter() {
+
+            @Override
+            public void readerConnected(DPFPReaderStatusEvent e) {
+                stausFingerReader.setText("Dispositivo conectado");
+                panelStatusFingerReader.setBackground(lStyle.getBgSuccess());
+                stausReader.setText("Aqui se muestra la acción del lector");
+            }
+
+            @Override
+            public void readerDisconnected(DPFPReaderStatusEvent e) {
+                stausFingerReader.setText("No existe ningun dispositivo conectado");
+                panelStatusFingerReader.setBackground(lStyle.getBgDanger());
+                stausReader.setText("Favor de validar la conexión con el lector");
+            }
+        });
+
+        this.lector.reader.addSensorListener(new DPFPSensorAdapter() {
             @Override
             public void fingerTouched(DPFPSensorEvent e) {
                 stausReader.setText("Lector presionado");
@@ -325,12 +341,11 @@ public class vP_Home extends javax.swing.JPanel {
             }
         });
     }
-   
-    
+
     public void VPH_CameraConnected() {
         webcam = Webcam.getDefault();
-        
-        if(webcam != null) {
+
+        if (webcam != null) {
             statusCamera.setText("Dispositivo conectado");
             panelStatusCamera.setBackground(lStyle.getBgSuccess());
         } else {
@@ -338,13 +353,13 @@ public class vP_Home extends javax.swing.JPanel {
             panelStatusCamera.setBackground(lStyle.getBgDanger());
         }
     }
-    
-    public void iniciarUserCard(){
+
+    public void iniciarUserCard() {
         user = Usuario.getInstance();
         userName.setText(user.getNombre());
         userJob.setText(user.getPuesto());
         userDepartament.setText(user.getLugarTrabajo());
-        
+
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

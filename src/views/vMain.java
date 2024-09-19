@@ -4,6 +4,7 @@ import com.digitalpersona.onetouch.DPFPGlobal;
 import com.digitalpersona.onetouch.capture.DPFPCapture;
 import com.digitalpersona.onetouch.capture.event.DPFPReaderStatusAdapter;
 import com.digitalpersona.onetouch.capture.event.DPFPReaderStatusEvent;
+import controllers.LectorHuella;
 import java.awt.Color;
 import java.awt.Cursor;
 import libraries.lStyle;
@@ -20,7 +21,7 @@ import views.process.vP_VerificadorHuellas;
 public class vMain extends javax.swing.JFrame {
 
     lStyle lStyle = new lStyle();
-    public DPFPCapture capturer;
+    public LectorHuella lector;
     private Usuario userinfo;
     
     public Cursor cursor;
@@ -30,6 +31,7 @@ public class vMain extends javax.swing.JFrame {
     public vMain() {
         initComponents();
         setDataMain();
+        lector = LectorHuella.getInstance();
     }
 
     @SuppressWarnings("unchecked")
@@ -449,8 +451,7 @@ public class vMain extends javax.swing.JFrame {
         
         switch(module) {
             case "home":
-                vM_FingerReagerConnected();
-                vP_Home vP_Home = new vP_Home(capturer);
+                vP_Home vP_Home = new vP_Home(lector);
                 vP_Home.setSize(mainPanel.getSize());
                 vP_Home.setLocation(0, 0);
                 mainPanel.add(vP_Home);
@@ -475,30 +476,7 @@ public class vMain extends javax.swing.JFrame {
         mainPanel.repaint();
     }
     
-    public void vM_FingerReagerConnected() {
-        try {
-            if(capturer == null) {
-                this.capturer = DPFPGlobal.getCaptureFactory().createCapture();
-                
-                this.capturer.addReaderStatusListener(new DPFPReaderStatusAdapter() {
-                    @Override
-                    public void readerConnected(DPFPReaderStatusEvent e) {
-                        System.out.println("Lector inicializado");
-                    }
-
-                    @Override
-                    public void readerDisconnected(DPFPReaderStatusEvent e) {
-                        System.out.println("No se detecto ningun lector");
-                    }
-                });
-                capturer.startCapture();
-            }
-            
-        } catch (Exception e) {
-            e.printStackTrace();
-            System.out.println("Error del lector: " + e.getMessage());
-        }
-    }
+    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel background;

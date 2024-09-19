@@ -36,7 +36,7 @@ import views.Error;
 public class LectorHuella {
 
     private static LectorHuella instancia;
-    private DPFPCapture reader;
+    public DPFPCapture reader;
     private DPFPEnrollment reclutador;
     private DPFPVerification verificador;
     private vP_CapturaHuellas vCaptura;
@@ -142,7 +142,7 @@ public class LectorHuella {
         System.out.println("Dedo seleccionado para enrollment: " + dedoSeleccionado);
     }
 
-    public void procesarEnrollment(DPFPSample sample) throws HuellaException{
+    public void procesarEnrollment(DPFPSample sample) throws HuellaException {
         try {
             DPFPFeatureSet features = extraerFeatures(sample, DPFPDataPurpose.DATA_PURPOSE_ENROLLMENT);
             reclutador.addFeatures(features);
@@ -199,9 +199,9 @@ public class LectorHuella {
                     return;
                 }
             }
-            if(!encontrado){
-            verif.actualizarInfo(null);
-            System.out.println("Huella no coincide con ninguna plantilla almacenada");
+            if (!encontrado) {
+                verif.actualizarInfo(null);
+                System.out.println("Huella no coincide con ninguna plantilla almacenada");
             }
         } catch (Exception e) {
             manejarError("Error durante la verficacion de huella", e);
@@ -223,5 +223,9 @@ public class LectorHuella {
 
     public void setVistaVerif(vP_VerificadorHuellas verif) {
         this.verif = verif;
+    }
+
+    public boolean isStarted() {
+        return reader.isStarted();
     }
 }
