@@ -77,6 +77,8 @@ public class vP_CapturaHuellas extends javax.swing.JPanel {
         separatorSeeker = new javax.swing.JSeparator();
         iconSeeker = new javax.swing.JLabel();
         refresh = new javax.swing.JButton();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        jTable1 = new javax.swing.JTable();
         panelPersonal = new javax.swing.JPanel();
         panelGeneralData = new javax.swing.JPanel();
         titlePanelGeneralData = new javax.swing.JLabel();
@@ -102,14 +104,11 @@ public class vP_CapturaHuellas extends javax.swing.JPanel {
         btnPulgarIzquierdo = new javax.swing.JButton();
         btnIndiceIzquierdo = new javax.swing.JButton();
         btnRegistrar = new javax.swing.JButton();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
-        back = new javax.swing.JButton();
 
         setBackground(new java.awt.Color(246, 249, 252));
-        setMaximumSize(new java.awt.Dimension(1000, 600));
-        setMinimumSize(new java.awt.Dimension(1000, 600));
-        setPreferredSize(new java.awt.Dimension(1000, 600));
+        setMaximumSize(new java.awt.Dimension(1000, 768));
+        setMinimumSize(new java.awt.Dimension(1000, 768));
+        setPreferredSize(new java.awt.Dimension(1000, 768));
 
         title.setFont(new java.awt.Font("Arial", 1, 24)); // NOI18N
         title.setForeground(new java.awt.Color(51, 51, 51));
@@ -147,6 +146,16 @@ public class vP_CapturaHuellas extends javax.swing.JPanel {
                 refreshActionPerformed(evt);
             }
         });
+
+        jScrollPane1.setBorder(null);
+
+        jTable1.setModel(table.getModel());
+        jTable1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTable1MouseClicked(evt);
+            }
+        });
+        jScrollPane1.setViewportView(jTable1);
 
         panelPersonal.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
@@ -419,37 +428,6 @@ public class vP_CapturaHuellas extends javax.swing.JPanel {
 
         panelPersonal.add(panelGeneralData1, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 10, 520, 450));
 
-        jScrollPane1.setBorder(null);
-
-        jTable1.setModel(table.getModel());
-        jTable1.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jTable1MouseClicked(evt);
-            }
-        });
-        jScrollPane1.setViewportView(jTable1);
-
-        panelPersonal.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 970, 470));
-
-        back.setBackground(new java.awt.Color(246, 249, 252));
-        back.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
-        back.setForeground(new java.awt.Color(102, 102, 102));
-        back.setText("<");
-        back.setBorder(null);
-        back.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                backMouseEntered(evt);
-            }
-            public void mouseExited(java.awt.event.MouseEvent evt) {
-                backMouseExited(evt);
-            }
-        });
-        back.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                backActionPerformed(evt);
-            }
-        });
-
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -457,46 +435,43 @@ public class vP_CapturaHuellas extends javax.swing.JPanel {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(title, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(654, 654, 654)
-                .addComponent(refresh)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(iconSeeker)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(seeker, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(separatorSeeker, javax.swing.GroupLayout.PREFERRED_SIZE, 222, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(94, 102, Short.MAX_VALUE))
             .addGroup(layout.createSequentialGroup()
-                .addGap(23, 23, 23)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(panelPersonal, javax.swing.GroupLayout.PREFERRED_SIZE, 969, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE))
+                        .addContainerGap()
+                        .addComponent(panelPersonal, javax.swing.GroupLayout.PREFERRED_SIZE, 969, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(back, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                        .addContainerGap()
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 970, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(726, 726, 726)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(separatorSeeker, javax.swing.GroupLayout.PREFERRED_SIZE, 222, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(refresh)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(iconSeeker)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(seeker, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                .addContainerGap(24, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(title)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 8, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(iconSeeker)
-                            .addComponent(seeker, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(3, 3, 3)
-                        .addComponent(separatorSeeker, javax.swing.GroupLayout.PREFERRED_SIZE, 5, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(iconSeeker)
+                    .addComponent(seeker, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(refresh))
-                .addGap(28, 28, 28)
-                .addComponent(back)
+                .addGap(6, 6, 6)
+                .addComponent(separatorSeeker, javax.swing.GroupLayout.PREFERRED_SIZE, 5, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 187, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(panelPersonal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(8, 8, 8))
+                .addContainerGap(42, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 //boton para capturar la imagen de la camara
@@ -544,31 +519,15 @@ public class vP_CapturaHuellas extends javax.swing.JPanel {
             }
             //Codigo para cambiar lo que hay en el panel
             desplegarPersonal();
-            back.setVisible(true);
-            jScrollPane1.setVisible(false);
             panelGeneralData.setVisible(true);
         } else {
             System.out.println("No hay ninguna fila seleccionada.");
         }
     }//GEN-LAST:event_jTable1MouseClicked
 
-    private void backActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backActionPerformed
-        proceso("busqueda");
-        back.setVisible(false);
-    }//GEN-LAST:event_backActionPerformed
-
-    private void backMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_backMouseEntered
-        back.setBackground(new Color(246, 249, 252));
-        back.setForeground(Color.BLUE);
-    }//GEN-LAST:event_backMouseEntered
-
-    private void backMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_backMouseExited
-        back.setForeground(new Color(102, 102, 102));
-    }//GEN-LAST:event_backMouseExited
-
     private void btnPulgarDerechoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnPulgarDerechoMouseClicked
         btnPulgarDerecho.setBackground(lStyle.getBtnseleccionado());
-        lector.iniciarEnrollmentPorDedo("indice derecho");
+        lector.iniciarEnrollmentPorDedo("pulgar derecho");
     }//GEN-LAST:event_btnPulgarDerechoMouseClicked
 
     private void btnIndiceDerechoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnIndiceDerechoMouseClicked
@@ -760,10 +719,6 @@ public class vP_CapturaHuellas extends javax.swing.JPanel {
                 btnActualizar.setEnabled(false);
                 panelGeneralData1.setVisible(true);
                 panelTomarFoto.setVisible(true);
-                seeker.setVisible(false);
-                iconSeeker.setVisible(false);
-                refresh.setVisible(false);
-                separatorSeeker.setVisible(false);
 
                 try {
                     ((FotoPanel) userPhoto).setImage(ImageIO.read(getClass().getResource("/resources/icon/defaultPhoto.jpg")));
@@ -780,10 +735,6 @@ public class vP_CapturaHuellas extends javax.swing.JPanel {
                 btnActualizar.setEnabled(true);
                 panelGeneralData1.setVisible(true);
                 panelTomarFoto.setVisible(false);
-                seeker.setVisible(false);
-                iconSeeker.setVisible(false);
-                refresh.setVisible(false);
-                separatorSeeker.setVisible(false);
                 btnPulgarDerecho.setEnabled(false);
                 btnIndiceDerecho.setEnabled(false);
                 btnMedio.setEnabled(false);
@@ -794,17 +745,12 @@ public class vP_CapturaHuellas extends javax.swing.JPanel {
                 jScrollPane1.setVisible(true);
                 panelGeneralData.setVisible(false);
                 panelGeneralData1.setVisible(false);
-                seeker.setVisible(true);
-                iconSeeker.setVisible(true);
-                refresh.setVisible(true);
-                separatorSeeker.setVisible(true);
                 break;
         }
     }
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton back;
     private javax.swing.JButton btnActualizar;
     private javax.swing.JButton btnCapturaHuellas3;
     private javax.swing.JButton btnIndiceDerecho;

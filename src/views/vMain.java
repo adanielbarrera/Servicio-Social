@@ -56,6 +56,7 @@ public class vMain extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(new java.awt.Color(255, 255, 255));
         setUndecorated(true);
+        setPreferredSize(new java.awt.Dimension(1250, 800));
 
         background.setBackground(new java.awt.Color(255, 255, 255));
         background.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -117,6 +118,7 @@ public class vMain extends javax.swing.JFrame {
         background.add(header, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1250, 30));
 
         menu.setBackground(new java.awt.Color(255, 255, 255));
+        menu.setPreferredSize(new java.awt.Dimension(250, 768));
 
         javax.swing.GroupLayout userPhotoLayout = new javax.swing.GroupLayout(userPhoto);
         userPhoto.setLayout(userPhotoLayout);
@@ -286,16 +288,17 @@ public class vMain extends javax.swing.JFrame {
                 .addComponent(btnVerify, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnLogout, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 177, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 347, Short.MAX_VALUE)
                 .addComponent(labelVersion)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(labelAuthor)
                 .addGap(8, 8, 8))
         );
 
-        background.add(menu, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 250, 630));
+        background.add(menu, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 250, 800));
 
         mainPanel.setBackground(new java.awt.Color(255, 255, 255));
+        mainPanel.setPreferredSize(new java.awt.Dimension(1000, 768));
 
         javax.swing.GroupLayout mainPanelLayout = new javax.swing.GroupLayout(mainPanel);
         mainPanel.setLayout(mainPanelLayout);
@@ -305,10 +308,10 @@ public class vMain extends javax.swing.JFrame {
         );
         mainPanelLayout.setVerticalGroup(
             mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 600, Short.MAX_VALUE)
+            .addGap(0, 780, Short.MAX_VALUE)
         );
 
-        background.add(mainPanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 30, 1000, 600));
+        background.add(mainPanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 30, 1000, 780));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -318,7 +321,7 @@ public class vMain extends javax.swing.JFrame {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(background, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(background, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         pack();
