@@ -5,6 +5,7 @@
 package controllers;
 
 import DAOs.PersonalDAO;
+import Exceptions.FotoException;
 import java.io.ByteArrayOutputStream;
 import com.github.sarxos.webcam.Webcam;
 import com.github.sarxos.webcam.WebcamPanel;
@@ -36,9 +37,12 @@ public class Camara {
     }
 
     //metodo para capturar una imagen de la camara
-    public void capturarImagen() {
-
+    public void capturarImagen() throws FotoException{
+if(webcam!=null){
         imagenCapturada = webcam.getImage();
+    }else{
+    throw new FotoException("No hay camara disponible");
+}
     }
 
     //metodo para obtener la imagen capturada

@@ -29,6 +29,7 @@ import views.Confirmacion;
 import views.Guardado;
 import views.Error;
 import views.Utils;
+import static views.process.vP_CapturaHuellas.Dedo.*;
 import views.vMain;
 
 /**
@@ -481,6 +482,7 @@ public class vP_CapturaHuellas extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 //boton para capturar la imagen de la camara
     private void btnCapturaHuellas3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnCapturaHuellas3MouseClicked
+
         capturarYMostrarImagen();
     }//GEN-LAST:event_btnCapturaHuellas3MouseClicked
 
@@ -499,7 +501,7 @@ public class vP_CapturaHuellas extends javax.swing.JPanel {
             sorter.setRowFilter(null);
         } else {
             // Aquí hacemos el filtrado sobre las columnas de nombre (0), apellido (1) y apellido materno (2)
-            sorter.setRowFilter(RowFilter.regexFilter("(?i)" + textoBusqueda, 0, 1, 2));
+            sorter.setRowFilter(RowFilter.regexFilter("(?i)" + textoBusqueda, 0, 1, 2, 3, 4));
         }
     }//GEN-LAST:event_seekerKeyReleased
 
@@ -514,7 +516,7 @@ public class vP_CapturaHuellas extends javax.swing.JPanel {
             selectPersonal();
             primeraVez = false;
         } else {
-        // Crear y mostrar el diálogo de confirmación
+            // Crear y mostrar el diálogo de confirmación
             Confirmacion confirmacion = new Confirmacion(frame);
             confirmacion.setVisible(true);
             if (confirmacion.isConfirmed()) {
@@ -524,28 +526,23 @@ public class vP_CapturaHuellas extends javax.swing.JPanel {
     }//GEN-LAST:event_jTable1MouseClicked
 
     private void btnPulgarDerechoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnPulgarDerechoMouseClicked
-        btnPulgarDerecho.setBackground(lStyle.getBtnseleccionado());
-        lector.iniciarEnrollmentPorDedo("pulgar derecho");
+        manejarClick(btnPulgarDerecho, PULGAR_DERECHO);
     }//GEN-LAST:event_btnPulgarDerechoMouseClicked
 
     private void btnIndiceDerechoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnIndiceDerechoMouseClicked
-        btnIndiceDerecho.setBackground(lStyle.getBtnseleccionado());
-        lector.iniciarEnrollmentPorDedo("indice derecho");
+        manejarClick(btnIndiceDerecho, INDICE_DERECHO);
     }//GEN-LAST:event_btnIndiceDerechoMouseClicked
 
     private void btnMedioMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnMedioMouseClicked
-        btnMedio.setBackground(lStyle.getBtnseleccionado());
-        lector.iniciarEnrollmentPorDedo("medio");
+        manejarClick(btnMedio, MEDIO);
     }//GEN-LAST:event_btnMedioMouseClicked
 
     private void btnPulgarIzquierdoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnPulgarIzquierdoMouseClicked
-        btnPulgarIzquierdo.setBackground(lStyle.getBtnseleccionado());
-        lector.iniciarEnrollmentPorDedo("pulgar izquierdo");
+        manejarClick(btnPulgarIzquierdo, PULGAR_IZQUIERDO);
     }//GEN-LAST:event_btnPulgarIzquierdoMouseClicked
 
     private void btnIndiceIzquierdoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnIndiceIzquierdoMouseClicked
-        btnIndiceIzquierdo.setBackground(lStyle.getBtnseleccionado());
-        lector.iniciarEnrollmentPorDedo("indice izquierdo");
+        manejarClick(btnIndiceIzquierdo, INDICE_IZQUIERDO);
     }//GEN-LAST:event_btnIndiceIzquierdoMouseClicked
 
     private void btnRegistrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegistrarActionPerformed
@@ -566,7 +563,7 @@ public class vP_CapturaHuellas extends javax.swing.JPanel {
                 personalDAO.reemplazarHuellas(personal);
                 guardado();
                 limpiarUI();
-            } catch (HuellaException | IOException e) {
+            } catch (HuellaException e) {
                 error(e.getMessage());
             }
         }
@@ -592,7 +589,11 @@ public class vP_CapturaHuellas extends javax.swing.JPanel {
     }
 
     private void capturarYMostrarImagen() {
-        camara.capturarImagen();
+        try {
+            camara.capturarImagen();
+        } catch (FotoException ex) {
+            error(ex.getMessage());
+        }
         BufferedImage imagen = camara.getImage();
         if (imagen != null) {
             ((FotoPanel) userPhoto2).setImage(imagen);
@@ -624,6 +625,7 @@ public class vP_CapturaHuellas extends javax.swing.JPanel {
             case 4:
                 jProgressBar1.setValue(100);
                 buton.setBackground(lStyle.getBgSuccess());
+                buton.setEnabled(false);
                 break;
         }
 
@@ -665,7 +667,7 @@ public class vP_CapturaHuellas extends javax.swing.JPanel {
         err.setVisible(true);
     }
 
-    public void limpiarUI() throws IOException {
+    public void limpiarUI() {
         btnPulgarDerecho.setBackground(new Color(214, 217, 223));
         btnIndiceDerecho.setBackground(new Color(214, 217, 223));
         btnMedio.setBackground(new Color(214, 217, 223));
@@ -717,6 +719,11 @@ public class vP_CapturaHuellas extends javax.swing.JPanel {
                 btnActualizar.setEnabled(false);
                 panelGeneralData1.setVisible(true);
                 panelTomarFoto.setVisible(true);
+                btnPulgarDerecho.setEnabled(true);
+                btnIndiceDerecho.setEnabled(true);
+                btnMedio.setEnabled(true);
+                btnPulgarIzquierdo.setEnabled(true);
+                btnIndiceIzquierdo.setEnabled(true);
 
                 try {
                     ((FotoPanel) userPhoto).setImage(ImageIO.read(getClass().getResource("/resources/icon/defaultPhoto.jpg")));
@@ -767,6 +774,36 @@ public class vP_CapturaHuellas extends javax.swing.JPanel {
         } else {
             System.out.println("No hay ninguna fila seleccionada.");
         }
+    }
+
+    // Enum para los dedos
+    enum Dedo {
+        PULGAR_DERECHO("pulgar derecho"),
+        INDICE_DERECHO("indice derecho"),
+        MEDIO("medio"),
+        PULGAR_IZQUIERDO("pulgar izquierdo"),
+        INDICE_IZQUIERDO("indice izquierdo");
+
+        private final String nombre;
+
+        Dedo(String nombre) {
+            this.nombre = nombre;
+        }
+
+        public String getNombre() {
+            return nombre;
+        }
+    }
+
+// Método generalizado para manejar clics
+    private void manejarClick(JButton boton, Dedo dedo) {
+
+        if (boton.isEnabled()) {
+            limpiarUI();
+            boton.setBackground(lStyle.getBtnseleccionado());
+            lector.iniciarEnrollmentPorDedo(dedo.getNombre());
+        }
+
     }
 
 
