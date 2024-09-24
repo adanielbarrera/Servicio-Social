@@ -555,6 +555,7 @@ public class vP_CapturaHuellas extends javax.swing.JPanel {
                 guardado();
             } catch (IOException | HuellaException | FotoException e) {
                 error(e.getMessage());
+                limpiarUI();
             }
         } else {
             //el personal solova a actualizar las huellas
@@ -564,6 +565,7 @@ public class vP_CapturaHuellas extends javax.swing.JPanel {
                 limpiarUI();
             } catch (HuellaException e) {
                 error(e.getMessage());
+                limpiarUI();
             }
         }
     }//GEN-LAST:event_btnRegistrarActionPerformed
@@ -667,6 +669,7 @@ public class vP_CapturaHuellas extends javax.swing.JPanel {
     }
 
     public void limpiarUI() {
+        jProgressBar1.setValue(0);      
         fingerprintImage.setIcon(null);
         btnPulgarDerecho.setBackground(new Color(214, 217, 223));
         btnIndiceDerecho.setBackground(new Color(214, 217, 223));
