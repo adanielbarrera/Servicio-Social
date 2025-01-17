@@ -1,2 +1,0 @@
-views.SystemCommandExecutor
-views.huella

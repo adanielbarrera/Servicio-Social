@@ -22,13 +22,13 @@ public class vP_Home extends javax.swing.JPanel {
     Usuario user = Usuario.getInstance();
 
     public vP_Home() {
-        /*initComponents();
-        setDataMail();*/
+        //initComponents();
+        //setDataMail();
         lector = LectorHuella.getInstance();
     }
 
     public vP_Home(LectorHuella lector) {
-        this.lector = lector;
+        this.lector = LectorHuella.getInstance();
         initComponents();
         setDataMail();
         iniciarUserCard();

@@ -50,7 +50,7 @@ public class ProcesosDB {
             conect = DriverManager.getConnection(url, user, password);
 
             if (conect != null) {
-                // System.out.println("Conexión a base de datos ["+url+"] listo...");
+                //System.out.println("Conexión a base de datos ["+url+"] listo...");
             } else if (conect == null) {
                 throw new SQLException();
             }

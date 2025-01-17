@@ -23,6 +23,7 @@ import com.digitalpersona.onetouch.processing.DPFPImageQualityException;
 import com.digitalpersona.onetouch.verification.DPFPVerification;
 import com.digitalpersona.onetouch.verification.DPFPVerificationResult;
 import java.awt.Image;
+import java.util.List;
 import java.util.Map;
 import models.Personal;
 import views.process.vP_CapturaHuellas;
@@ -183,20 +184,23 @@ public class LectorHuella {
         Personal personal = null;
         try {
             DPFPFeatureSet features = extraerFeatures(sample, DPFPDataPurpose.DATA_PURPOSE_VERIFICATION);
-            Map<Integer, DPFPTemplate> plantillasAlmacenadas = personalDAO.obtenerTodasLasPlatillas();
-            for (Map.Entry<Integer, DPFPTemplate> entry : plantillasAlmacenadas.entrySet()) {
+            Map<Integer, List<DPFPTemplate>> plantillasAlmacenadas = personalDAO.obtenerTodasLasPlatillas();
+            for (Map.Entry<Integer, List<DPFPTemplate>> entry : plantillasAlmacenadas.entrySet()) {
                 encontrado = false;
                 int id = entry.getKey();
-                DPFPTemplate plantilla = entry.getValue();
+                List<DPFPTemplate> plantillas = entry.getValue();
 
-                DPFPVerificationResult resultado = verificador.verify(features, plantilla);
+                // Itera sobre todas las plantillas almacenadas para este ID
+                for (DPFPTemplate plantilla : plantillas) {
+                    DPFPVerificationResult resultado = verificador.verify(features, plantilla);
 
-                if (resultado.isVerified()) {
-                    System.out.println("Huella verificada exitosamente");
-                    personal = personalDAO.getPersonalByID(id);
-                    verif.actualizarInfo(personal);
-                    encontrado = true;
-                    return;
+                    if (resultado.isVerified()) {
+                        System.out.println("Huella verificada exitosamente");
+                        personal = personalDAO.getPersonalByID(id);
+                        verif.actualizarInfo(personal);
+                        encontrado = true;
+                        return; // Si la huella coincide, termina el proceso de verificación
+                    }
                 }
             }
             if (!encontrado) {

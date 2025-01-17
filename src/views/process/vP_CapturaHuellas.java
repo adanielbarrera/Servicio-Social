@@ -481,7 +481,6 @@ public class vP_CapturaHuellas extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 //boton para capturar la imagen de la camara
     private void btnCapturaHuellas3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnCapturaHuellas3MouseClicked
-
         capturarYMostrarImagen();
     }//GEN-LAST:event_btnCapturaHuellas3MouseClicked
 
@@ -495,7 +494,6 @@ public class vP_CapturaHuellas extends javax.swing.JPanel {
 
     private void seekerKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_seekerKeyReleased
         String textoBusqueda = seeker.getText();
-        //codigo para buscar
         if (textoBusqueda.trim().length() == 0) {
             sorter.setRowFilter(null);
         } else {
@@ -558,7 +556,7 @@ public class vP_CapturaHuellas extends javax.swing.JPanel {
                 limpiarUI();
             }
         } else {
-            //el personal solova a actualizar las huellas
+            //el personal solo va a actualizar las huellas
             try {
                 personalDAO.reemplazarHuellas(personal);
                 guardado();
@@ -625,11 +623,9 @@ public class vP_CapturaHuellas extends javax.swing.JPanel {
                 break;
             case 4:
                 jProgressBar1.setValue(100);
-                //buton.setBackground(lStyle.getBgSuccess());
                 buton.setEnabled(false);
                 break;
         }
-
     }
 
     private JButton obtenerBotonPorDedo(String dedoSeleccionado) {
@@ -645,7 +641,7 @@ public class vP_CapturaHuellas extends javax.swing.JPanel {
             case "indice izquierdo":
                 return btnIndiceIzquierdo;
             default:
-                return null; // O lanza una excepción si es un caso inesperado
+                return null; 
         }
     }
 
@@ -654,7 +650,6 @@ public class vP_CapturaHuellas extends javax.swing.JPanel {
         panelGeneralData.setVisible(false);
         sorter = new TableRowSorter<>(jTable1.getModel());
         jTable1.setRowSorter(sorter);
-
     }
 
     //metodo para confirmar visualmente que se guardo en base de datos
@@ -669,7 +664,7 @@ public class vP_CapturaHuellas extends javax.swing.JPanel {
     }
 
     public void limpiarUI() {
-        jProgressBar1.setValue(0);      
+        jProgressBar1.setValue(0);    
         fingerprintImage.setIcon(null);
         btnPulgarDerecho.setBackground(new Color(214, 217, 223));
         btnIndiceDerecho.setBackground(new Color(214, 217, 223));
@@ -689,7 +684,7 @@ public class vP_CapturaHuellas extends javax.swing.JPanel {
         if (personalDAO.tieneRegistro(personal.getrFC())) {
             if (personalDAO.tieneBiometria(personal.getrFC())) {
 
-                //si el personal tiene biometria enronces actualizar la instancia de personal
+                //si el personal tiene biometria entonces actualizar la instancia de personal
                 personalDAO.getBiometria(personal);
                 if (personal.getFoto() != null) {
                     ((FotoPanel) userPhoto).setImage(personal.getFoto());

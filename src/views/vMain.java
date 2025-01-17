@@ -1,9 +1,5 @@
 package views;
 
-import com.digitalpersona.onetouch.DPFPGlobal;
-import com.digitalpersona.onetouch.capture.DPFPCapture;
-import com.digitalpersona.onetouch.capture.event.DPFPReaderStatusAdapter;
-import com.digitalpersona.onetouch.capture.event.DPFPReaderStatusEvent;
 import controllers.LectorHuella;
 import java.awt.Color;
 import java.awt.Cursor;
@@ -23,11 +19,11 @@ public class vMain extends javax.swing.JFrame {
     lStyle lStyle = new lStyle();
     public LectorHuella lector;
     private Usuario userinfo;
-    
+
     public Cursor cursor;
     int xMouse;
     int yMouse;
-    
+
     public vMain() {
         initComponents();
         setDataMain();
@@ -360,7 +356,7 @@ public class vMain extends javax.swing.JFrame {
 
     private void btnVerifyActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVerifyActionPerformed
         activeModule("verify");
-        
+
     }//GEN-LAST:event_btnVerifyActionPerformed
 
     private void btnLogoutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLogoutActionPerformed
@@ -372,7 +368,7 @@ public class vMain extends javax.swing.JFrame {
     }//GEN-LAST:event_iconCloseMouseEntered
 
     private void iconMinimizarMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_iconMinimizarMouseEntered
-         iconMinimizar.setCursor(new Cursor(cursor.HAND_CURSOR)); //pasa el cursor de la flechita a la mano:
+        iconMinimizar.setCursor(new Cursor(cursor.HAND_CURSOR)); //pasa el cursor de la flechita a la mano:
     }//GEN-LAST:event_iconMinimizarMouseEntered
 
     private void btnLogoutMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnLogoutMouseClicked
@@ -415,68 +411,67 @@ public class vMain extends javax.swing.JFrame {
             }
         });
     }
-    
-    public void setDataMain() {       
-        
+
+    public void setDataMain() {
+
         header.setBackground(new Color(255, 255, 255, 50));
         menu.setBackground(lStyle.getBgDgfPrincipal());
-        
+
         btnHome.setBackground(lStyle.getBgDgfPrincipal());
         btnCapture.setBackground(lStyle.getBgDgfPrincipal());
         btnVerify.setBackground(lStyle.getBgDgfPrincipal());
         btnLogout.setBackground(lStyle.getBgDgfPrincipal());
-        
+
         btnHome.setForeground(lStyle.getTxtWhite());
         btnCapture.setForeground(lStyle.getTxtWhite());
         btnVerify.setForeground(lStyle.getTxtWhite());
         btnLogout.setForeground(lStyle.getTxtWhite());
-        
-        try{
-        userinfo = Usuario.getInstance();
-        userName.setText(userinfo.getNombre());
-        userPosition.setText(userinfo.getPuesto());
-        userSite.setText(userinfo.getLugarTrabajo());
-        ((FotoPanel) userPhoto).setImage(userinfo.getFoto());
-        //userPhoto.add(userinfo.getFoto());
-        }catch(Exception e){
-           e.printStackTrace();
+
+        try {
+            userinfo = Usuario.getInstance();
+            userName.setText(userinfo.getNombre());
+            userPosition.setText(userinfo.getPuesto());
+            userSite.setText(userinfo.getLugarTrabajo());
+            ((FotoPanel) userPhoto).setImage(userinfo.getFoto());
+            //userPhoto.add(userinfo.getFoto());
+        } catch (Exception e) {
+            e.printStackTrace();
         }
 
-        activeModule("capture");
+        activeModule("home");
     }
-    
+
     public void activeModule(String module) {
-        
+
         mainPanel.removeAll();
-        
-        switch(module) {
+
+        switch (module) {
             case "home":
                 vP_Home vP_Home = new vP_Home(lector);
                 vP_Home.setSize(mainPanel.getSize());
                 vP_Home.setLocation(0, 0);
                 mainPanel.add(vP_Home);
-            break;
-            
+                break;
+
             case "capture":
                 vP_CapturaHuellas vP_CapturaHuellas = new vP_CapturaHuellas();
                 vP_CapturaHuellas.setSize(mainPanel.getSize());
                 vP_CapturaHuellas.setLocation(0, 0);
                 mainPanel.add(vP_CapturaHuellas);
-            break;
-            
+                break;
+
             case "verify":
                 vP_VerificadorHuellas vP_VerificadorHuellas = new vP_VerificadorHuellas();
                 vP_VerificadorHuellas.setSize(mainPanel.getSize());
                 vP_VerificadorHuellas.setLocation(0, 0);
                 mainPanel.add(vP_VerificadorHuellas);
-            break;
+                break;
         }
-        
+
         mainPanel.revalidate();
         mainPanel.repaint();
     }
-    
-    
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel background;

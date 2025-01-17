@@ -333,10 +333,10 @@ public class PersonalDAO {
 
     }
 
-    public Map<Integer, DPFPTemplate> obtenerTodasLasPlatillas() {
+    public Map<Integer, List<DPFPTemplate>> obtenerTodasLasPlatillas() {
         String sql = "select dpe_id, db_huella1,db_huella2,db_huella3,db_huella4,db_huella5 "
                 + "from datosBiometricos";
-        Map<Integer, DPFPTemplate> plantillas = new HashMap<>();
+        Map<Integer, List<DPFPTemplate>> plantillas = new HashMap<>();
         try {
             conn = conexion.Conectar(3);
             pstmt = conn.prepareStatement(sql);
@@ -345,6 +345,8 @@ public class PersonalDAO {
 
             while (rs.next()) {
                 int id = rs.getInt("dpe_id");
+                List<DPFPTemplate> listaPlantillas = new ArrayList<>();
+
                 // Obtener las huellas como arrays de bytes
                 byte[] huella1 = rs.getBytes("db_huella1");
                 byte[] huella2 = rs.getBytes("db_huella2");
@@ -355,24 +357,30 @@ public class PersonalDAO {
                 // Convertir los arrays de bytes a DPFPTemplate y agregar a la lista
                 if (huella1 != null) {
                     DPFPTemplate template1 = DPFPGlobal.getTemplateFactory().createTemplate(huella1);
-                    plantillas.put(id, template1);
+                    listaPlantillas.add(template1);
                 }
                 if (huella2 != null) {
                     DPFPTemplate template2 = DPFPGlobal.getTemplateFactory().createTemplate(huella2);
-                    plantillas.put(id, template2);
+                    listaPlantillas.add(template2);
                 }
                 if (huella3 != null) {
                     DPFPTemplate template3 = DPFPGlobal.getTemplateFactory().createTemplate(huella3);
-                    plantillas.put(id, template3);
+                    listaPlantillas.add(template3);
                 }
                 if (huella4 != null) {
                     DPFPTemplate template4 = DPFPGlobal.getTemplateFactory().createTemplate(huella4);
-                    plantillas.put(id, template4);
+                    listaPlantillas.add(template4);
                 }
                 if (huella5 != null) {
                     DPFPTemplate template5 = DPFPGlobal.getTemplateFactory().createTemplate(huella5);
-                    plantillas.put(id, template5);
+                    listaPlantillas.add(template5);
                 }
+
+                // Si hay huellas, agregar la lista al map
+                if (!listaPlantillas.isEmpty()) {
+                    plantillas.put(id, listaPlantillas);
+                }
+
             }
 
         } catch (SQLException e) {
